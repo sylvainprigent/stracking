@@ -1,5 +1,27 @@
 
 
+class SParticles:
+    """Container for particles
+
+    The container have two data. The particle array (N, D+1) of the particles
+    and a properties dictionnary for the features
+
+    Parameters
+    ----------
+    data : array (N, D+1)
+        Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
+        axis is the integer ID of the track. D is either 3 or 4 for planar
+        or volumetric timeseries respectively.
+    properties : dict {str: array (N,)}, DataFrame
+        Properties for each point. Each property should be an array of length N,
+        where N is the number of points.
+
+    """
+    def __init__(self, data=None, properties=None):
+        self.data = data
+        self.properties = properties
+
+
 class STracks:
     """Container for trajectories
 
@@ -21,9 +43,13 @@ class STracks:
         case of track splitting, or more than one (the track has multiple
         parents, but only one child) in the case of track merging.
         See examples/tracks_3d_with_graph.py
+    features: dict {str: dict}
+            Properties for each tracks. Each feature should be an map of
+            trackID=feature. Ex: features['length'][12]=25.2
 
     """
-    def __init__(self, data=None, properties=None, graph=None):
+    def __init__(self, data=None, properties=None, graph=None, features=None):
         self.data = data
         self.properties = properties
         self.graph = graph
+        self.features = features
