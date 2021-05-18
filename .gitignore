@@ -1,0 +1,12 @@
+*.pyc
+*.pyo
+*~
+\.#*
+/build
+/dist
+*.egg-info
+*.so
+__pycache__
+.DS_Store
+_build
+/.idea
