@@ -1,3 +1,4 @@
-from .containers import STracks
+from ._containers import SParticles, STracks
 
-__all__ = ['STracks']
+__all__ = ['SParticles',
+           'STracks']

@@ -11,7 +11,7 @@ class STracksFilter:
     def __init__(self):
         pass
 
-    def filter(self, stracks):
+    def run(self, stracks):
         """Run the filtering
 
         Parameters

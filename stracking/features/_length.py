@@ -10,9 +10,9 @@ class LengthFeature(SFeature):
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
-    def measure(self, stracks, image=None):
+    def run(self, stracks, image=None):
         data = stracks.data
         tracks_ids = np.unique(data[:, 0])
         length_features = dict()
@@ -29,15 +29,15 @@ class DistanceFeature(SFeature):
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
-    def measure(self, stracks, image=None):
+    def run(self, stracks, image=None):
         if stracks.shape[1] < 5:
-            return self._measure_2d(stracks)
+            return self._run_2d(stracks)
         else:
-            return self._measure_3d(stracks)
+            return self._run_3d(stracks)
 
-    def _measure_2d(self, stracks):
+    def _run_2d(self, stracks):
         data = stracks.data
         tracks_ids = np.unique(data[:, 0])
         distance_features = dict()
@@ -60,7 +60,7 @@ class DistanceFeature(SFeature):
         stracks.features['distance'] = distance_features
         return stracks
 
-    def _measure_3d(self, stracks):
+    def _run_3d(self, stracks):
         data = stracks.data
         tracks_ids = np.unique(data[:, 0])
         distance_features = dict()
@@ -94,15 +94,15 @@ class DisplacementFeature(SFeature):
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
-    def measure(self, stracks, image=None):
+    def run(self, stracks, image=None):
         if stracks.shape[1] < 5:
-            return self._measure_2d(stracks)
+            return self._run_2d(stracks)
         else:
-            return self._measure_3d(stracks)
+            return self._run_3d(stracks)
 
-    def _measure_2d(self, stracks):
+    def _run_2d(self, stracks):
         data = stracks.data
         tracks_ids = np.unique(data[:, 0])
         displacement_features = dict()
@@ -124,7 +124,7 @@ class DisplacementFeature(SFeature):
         stracks.features['displacement'] = displacement_features
         return stracks
 
-    def _measure_3d(self, stracks):
+    def _run_3d(self, stracks):
         data = stracks.data
         tracks_ids = np.unique(data[:, 0])
         displacement_features = dict()

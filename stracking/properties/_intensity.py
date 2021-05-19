@@ -44,11 +44,12 @@ class IntensityProperty(SProperty):
 
     """
     def __init__(self, radius):
+        super().__init__()
         if radius <= 0:
             raise Exception('IntensityProperty: radius must be positive')
         self.radius = radius
 
-    def measure(self, sparticles, image):
+    def run(self, sparticles, image):
 
         if image.ndim != sparticles.data.shape[1]-1:
             raise Exception('IntensityProperty: image and particles dimensions'

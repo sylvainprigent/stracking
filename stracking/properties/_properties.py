@@ -9,7 +9,7 @@ class SProperty:
     def __init__(self):
         pass
 
-    def measure(self, sparticles, image):
+    def run(self, sparticles, image):
         """Calculate the feature
 
         Parameters

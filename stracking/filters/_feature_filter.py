@@ -24,7 +24,7 @@ class FeatureFilter(STracksFilter):
         self.min_val = min_val
         self.max_val = max_val
 
-    def filter(self, stracks):
+    def run(self, stracks):
         if self.feature_name not in stracks.features:
             raise Exception('FeatureFilter: feature ' + self.feature_name +
                             ' not found')

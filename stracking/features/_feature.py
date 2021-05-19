@@ -12,7 +12,7 @@ class SFeature:
     def __init__(self):
         pass
 
-    def measure(self, stracks, image=None):
+    def run(self, stracks, image=None):
         """Measure a track property
 
         Parameters
