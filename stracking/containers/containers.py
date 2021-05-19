@@ -15,11 +15,14 @@ class SParticles:
     properties : dict {str: array (N,)}, DataFrame
         Properties for each point. Each property should be an array of length N,
         where N is the number of points.
+    scale : tuple of float
+        Scale factors for the image data.
 
     """
-    def __init__(self, data=None, properties=None):
+    def __init__(self, data=None, properties=None, scale=None):
         self.data = data
         self.properties = properties
+        self.scale = scale
 
 
 class STracks:
@@ -46,10 +49,14 @@ class STracks:
     features: dict {str: dict}
             Properties for each tracks. Each feature should be an map of
             trackID=feature. Ex: features['length'][12]=25.2
+    scale : tuple of float
+        Scale factors for the image data.
 
     """
-    def __init__(self, data=None, properties=None, graph=None, features=None):
+    def __init__(self, data=None, properties=None, graph=None, features=None,
+                 scale=None):
         self.data = data
         self.properties = properties
         self.graph = graph
         self.features = features
+        self.scale = scale

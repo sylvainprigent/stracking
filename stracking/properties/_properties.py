@@ -25,4 +25,4 @@ class SProperty:
             input particles with the calculated feature added to the properties
 
         """
-        pass
+        raise Exception('SProperty is abstract')

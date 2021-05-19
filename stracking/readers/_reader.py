@@ -35,3 +35,4 @@ class STrackReaderInterface:
         The parsed data are stored in the stracks attribute
 
         """
+        raise Exception('STrackReaderInterface is abstract')
