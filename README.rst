@@ -20,10 +20,10 @@ feature, code or documentation improvement).
 .. _git_repo:
 
 #. Use `Git <https://git-scm.com/>`_ to check out the latest source from the
-   `stracking repository <https://github.com./sylvainprigent/stracking>`_ on
+   `stracking repository <https://github.com/sylvainprigent/stracking>`_ on
    GitLab.::
 
-        git clone git://gitlab.inria.fr/serpico/stracking.git  # add --depth 1 if your connection is slow
+        git clone git://github.com/sylvainprigent/stracking.git  # add --depth 1 if your connection is slow
         cd stracking
 
    If you plan on submitting a pull-request, you should clone from your fork

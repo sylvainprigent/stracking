@@ -56,18 +56,18 @@ class DoGDetector(SDetector):
         """
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[2]):
                 frame = image[:, :, t]
                 blobs = blob.blob_dog(frame, self.min_sigma, self.max_sigma,
                                       self.sigma_ratio, self.threshold,
                                       self.overlap)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 1] = blobs[:, 1]  # y
-                spots[:, 2] = blobs[:, 0]  # x
+                spots[:, 2] = blobs[:, 1]  # y
+                spots[:, 1] = blobs[:, 0]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 2]]), axis=0)
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
@@ -83,8 +83,8 @@ class DoGDetector(SDetector):
                 spots[:, 2] = blobs[:, 2]  # y
                 spots[:, 3] = blobs[:, 1]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 3]]), axis=0)
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('DoGDetector: can process only 2D+t or 3D+t images')
@@ -156,7 +156,7 @@ class LoGDetector(SDetector):
         """
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[2]):
                 frame = image[:, :, t]
                 blobs = blob.blob_log(frame, self.min_sigma,
@@ -164,11 +164,14 @@ class LoGDetector(SDetector):
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 1] = blobs[:, 1]  # y
-                spots[:, 2] = blobs[:, 0]  # x
+                spots[:, 2] = blobs[:, 1]  # y
+                spots[:, 1] = blobs[:, 0]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 2]]), axis=0)
+                #print('blobs:', blobs)
+                #print('concatenate spots: ', spots)
+
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
@@ -185,8 +188,8 @@ class LoGDetector(SDetector):
                 spots[:, 2] = blobs[:, 2]  # y
                 spots[:, 3] = blobs[:, 1]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 3]]), axis=0)
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('LoGDetector: can process only 2D+t or 3D+t images')
@@ -257,7 +260,7 @@ class DoHDetector(SDetector):
         """
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[2]):
                 frame = image[:, :, t]
                 blobs = blob.blob_doh(frame, self.min_sigma,
@@ -265,11 +268,11 @@ class DoHDetector(SDetector):
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 1] = blobs[:, 1]  # y
-                spots[:, 2] = blobs[:, 0]  # x
+                spots[:, 2] = blobs[:, 1]  # y
+                spots[:, 1] = blobs[:, 0]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 2]]), axis=0)
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
@@ -286,8 +289,8 @@ class DoHDetector(SDetector):
                 spots[:, 2] = blobs[:, 2]  # y
                 spots[:, 3] = blobs[:, 1]  # x
 
-                spots_ = np.concatenate((spots_, [spots]), axis=0)
-                sigma_ = np.concatenate((sigma_, [blobs[:, 3]]), axis=0)
+                spots_ = np.concatenate((spots_, spots), axis=0)
+                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('DoHDetector: can process only 2D+t or 3D+t images')
