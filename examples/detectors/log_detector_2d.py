@@ -9,10 +9,11 @@ import numpy as np
 import napari
 
 from stracking.detectors import LoGDetector
-from stracking.data import fake_traks1
+from stracking.data import fake_tracks1
+
 
 # load 2D+t sample
-image = fake_traks1()
+image = fake_tracks1()
 
 # detect particles
 detector = LoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)

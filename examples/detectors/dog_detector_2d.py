@@ -9,10 +9,10 @@ import numpy as np
 import napari
 
 from stracking.detectors import DoGDetector
-from stracking.data import fake_traks1
+from stracking.data import fake_tracks1
 
 # load 2D+t sample
-image = fake_traks1()
+image = fake_tracks1()
 
 # detect particles
 detector = DoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)

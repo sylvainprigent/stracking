@@ -2,7 +2,7 @@ import os.path as osp
 import os
 import numpy as np
 
-__all__ = ['fake_traks1']
+__all__ = ['fake_tracks1']
 
 legacy_data_dir = osp.abspath(osp.dirname(__file__))
 
@@ -48,7 +48,7 @@ def _load(f):
     return imread(_fetch(f))
 
 
-def fake_traks1():
+def fake_tracks1():
     """2D+t particles moving horizontally.
 
     Returns
@@ -57,5 +57,5 @@ def fake_traks1():
         LLSM AP2 image.
     """
 
-    return np.transpose(_load("fake_traks1.tif"), (1, 2, 0))
+    return np.transpose(_load("fake_tracks1.tif"), (1, 2, 0))
 

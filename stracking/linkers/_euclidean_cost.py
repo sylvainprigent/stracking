@@ -1,15 +1,15 @@
 from ._linker import SLinkerCost
 
 
-class CostEuclidean(SLinkerCost):
+class EuclideanCost(SLinkerCost):
     """Calculate the squared euclidean distance between two objects center
 
     It calculated the squared distance and not the distance to save computation
 
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, max_cost=1000):
+        super().__init__(max_cost)
 
     def run(self, obj1, obj2, dt=1):
         # print('obj1=', obj1)

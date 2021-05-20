@@ -51,7 +51,7 @@ class SLinker:
     def __init__(self, cost=None):
         self.cost = cost
 
-    def run(self, image, particles):
+    def run(self, particles, image=None):
         """Run the tracker
 
         Parameters
@@ -76,16 +76,16 @@ def calculate_num_obj_per_frame(detections):
     ----------
     detections : ndarray
         2D array where each line is an object with the following mandatory
-        features: [t, z, y, x] or [t, y, x].
+        features: [t, z, x, y] or [t, x, y].
 
     Returns
     -------
     counts : ndarray
         Number of objects for each frames
     """
-    max_index = detections[-1, 0]
-    counts = np.zeros(max_index+1)
     first_col = detections[:, 0]
-    for t in range(max_index+1):
-        counts[t] = np.count_nonzero(first_col == t)
+    num_index = len(np.unique(first_col))
+    counts = np.zeros(num_index, dtype=int)
+    for t in range(num_index):
+        counts[t] = int(np.count_nonzero(first_col == t))
     return counts

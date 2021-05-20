@@ -19,7 +19,7 @@ class SParticles:
         Scale factors for the image data.
 
     """
-    def __init__(self, data=None, properties=None, scale=None):
+    def __init__(self, data=None, properties=dict(), scale=None):
         self.data = data
         self.properties = properties
         self.scale = scale
@@ -53,7 +53,8 @@ class STracks:
         Scale factors for the image data.
 
     """
-    def __init__(self, data=None, properties=None, graph=None, features=None,
+    def __init__(self, data=None, properties=dict(),
+                 graph=dict(), features=dict(),
                  scale=None):
         self.data = data
         self.properties = properties

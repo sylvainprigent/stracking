@@ -8,7 +8,7 @@ from stracking.containers import STracks
 
 
 class SPLinker(SLinker):
-    """Linker using shortest path algorithm
+    """Linker using Shortest Path algorithm
 
     Find the optimal trajectories by finding iteratively the shortest path in
     the graph of all the possible trajectories
@@ -17,9 +17,10 @@ class SPLinker(SLinker):
 
     Example:
           ```
+          particles = SParticles(...)
           euclidean_cost = EuclideanCost(max_move=5.0)
           my_tracker = SPLinker(cost=euclidean_cost, gap=1)
-          tracks = my_detector.run(image, particles)
+          tracks = my_tracker.run(particles)
           ```
 
     Parameters
@@ -43,8 +44,11 @@ class SPLinker(SLinker):
         self.track_count_ = -1
         self._dim = 0
 
-    def run(self, image, particles):
+    def run(self, particles, image=None):
         self._detections = particles.data
+
+        print('detections shape=', self._detections.shape)
+
         if self._detections.shape[1] == 4:
             self._dim = 3
         else:
@@ -65,6 +69,7 @@ class SPLinker(SLinker):
 
         # 1.2- connect detections that are close enough
         num_frames = len(num_obj_per_frame)
+        print('num frames=', num_frames)
         for frame in range(num_frames - 1):
             for nframe in range(1, self.gap_closing + 1):
                 n_frame = frame + nframe
@@ -80,6 +85,8 @@ class SPLinker(SLinker):
                             self.cost.run(self._detections[idx_obj1 - 1, :],
                                           self._detections[idx_obj2 - 1, :])
 
+                        print('cost=', cost_value)
+                        print('self.cost.max_cost=', self.cost.max_cost)
                         if cost_value < self.cost.max_cost:
                             if frame - n_frame - 1 > 0:
                                 graph[idx_obj1, idx_obj2] = \
@@ -95,6 +102,7 @@ class SPLinker(SLinker):
         # 2- Optimize
         self.tracks_ = np.empty((0, self._detections.shape[1]+1))
         while 1:
+            print('extract track...')
             # 2.1- Short path algorithm
             dist_matrix, predecessors = bellman_ford(csgraph=graph,
                                                      directed=True,
@@ -107,7 +115,7 @@ class SPLinker(SLinker):
             if track.shape[0] <= self.min_track_length:
                 break
             else:
-                self.tracks_ = np.concatenate((self.tracks_, [track]), axis=0)
+                self.tracks_ = np.concatenate((self.tracks_, track), axis=0)
         return STracks(data=self.tracks_, properties=None, graph={})
 
     def _path_to_track(self, graph, predecessors):
@@ -131,9 +139,11 @@ class SPLinker(SLinker):
         track = np.empty((0, self._detections.shape[1]+1))
         current = len(predecessors) - 1
         self.track_count_ += 1
+        print('dim in track to path=', self._dim)
         while 1:
             pred = predecessors[current]
             if pred > 0:
+                print("add predecessor...")
                 # remove the track nodes in the graph
                 graph[pred, :] = 0
                 graph[:, pred] = 0
@@ -143,13 +153,11 @@ class SPLinker(SLinker):
                 if self._dim == 2:
                     spot = [self.track_count_, object_array[0],
                             object_array[1], object_array[2]]
-                    self.tracks_ = np.concatenate((track, [spot]),
-                                                  axis=0)
+                    track = np.concatenate(([spot], track), axis=0)
                 elif self._dim == 3:
                     spot = [self.track_count_, object_array[0],
                             object_array[1], object_array[2], object_array[3]]
-                    self.tracks_ = np.concatenate((track, [spot]),
-                                                  axis=0)
+                    track = np.concatenate(([spot], track), axis=0)
                 else:
                     raise Exception('Tracker cannot create track with object'
                                     ' of dimension ' + str(self._dim))

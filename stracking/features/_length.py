@@ -32,7 +32,7 @@ class DistanceFeature(SFeature):
         super().__init__()
 
     def run(self, stracks, image=None):
-        if stracks.shape[1] < 5:
+        if stracks.data.shape[1] < 5:
             return self._run_2d(stracks)
         else:
             return self._run_3d(stracks)
@@ -44,7 +44,7 @@ class DistanceFeature(SFeature):
 
         scale_x = 1
         scale_y = 1
-        if len(stracks.scale) == 3:
+        if stracks.scale and len(stracks.scale) == 3:
             scale_x = pow(stracks.scale[1], 2)
             scale_y = pow(stracks.scale[2], 2)
 
@@ -97,7 +97,7 @@ class DisplacementFeature(SFeature):
         super().__init__()
 
     def run(self, stracks, image=None):
-        if stracks.shape[1] < 5:
+        if stracks.data.shape[1] < 5:
             return self._run_2d(stracks)
         else:
             return self._run_3d(stracks)
@@ -109,7 +109,7 @@ class DisplacementFeature(SFeature):
 
         scale_x = 1
         scale_y = 1
-        if len(stracks.scale) == 3:
+        if stracks.scale and len(stracks.scale) == 3:
             scale_x = pow(stracks.scale[1], 2)
             scale_y = pow(stracks.scale[2], 2)
 

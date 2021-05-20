@@ -51,7 +51,7 @@ class IntensityProperty(SProperty):
 
     def run(self, sparticles, image):
 
-        if image.ndim != sparticles.data.shape[1]-1:
+        if image.ndim != sparticles.data.shape[1]:
             raise Exception('IntensityProperty: image and particles dimensions'
                             'do not match')
 
@@ -73,11 +73,11 @@ class IntensityProperty(SProperty):
         max_ = np.zeros((particles.shape[0]))
 
         for i in range(particles.shape[0]):
-            x = particles[i, 3]
-            y = particles[i, 2]
-            t = particles[i, 1]
+            x = int(particles[i, 2])
+            y = int(particles[i, 1])
+            t = int(particles[i, 0])
             # get the disk coordinates
-            val = image[t, rr+x, cc+y]
+            val = image[cc+y, rr+x, t]
             mean_[i] = np.mean(val)
             std_[i] = np.std(val)
             min_[i] = np.min(val)
@@ -86,7 +86,7 @@ class IntensityProperty(SProperty):
         sparticles.properties['mean_intensity'] = mean_
         sparticles.properties['std_intensity'] = std_
         sparticles.properties['min_intensity'] = min_
-        sparticles.properties['max_intensity'] = min_
+        sparticles.properties['max_intensity'] = max_
         sparticles.properties['radius'] = \
             self.radius*np.ones((particles.shape[0]))
         return sparticles
@@ -101,11 +101,11 @@ class IntensityProperty(SProperty):
         max_ = np.zeros((particles.shape[0]))
 
         for i in range(particles.shape[0]):
-            x = particles[i, 4]
-            y = particles[i, 3]
-            z = particles[i, 2]
-            t = particles[i, 1]
-            val = image[zz+z, xx+x, yy+y, t]
+            x = int(particles[i, 3])
+            y = int(particles[i, 2])
+            z = int(particles[i, 1])
+            t = int(particles[i, 0])
+            val = image[zz+z, yy+y, xx+x, t]
             mean_[i] = np.mean(val)
             std_[i] = np.std(val)
             min_[i] = np.min(val)
@@ -114,7 +114,7 @@ class IntensityProperty(SProperty):
         sparticles.properties['mean_intensity'] = mean_
         sparticles.properties['std_intensity'] = std_
         sparticles.properties['min_intensity'] = min_
-        sparticles.properties['max_intensity'] = min_
+        sparticles.properties['max_intensity'] = max_
         sparticles.properties['radius'] = \
             self.radius * np.ones((particles.shape[0]))
         return sparticles

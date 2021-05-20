@@ -35,8 +35,10 @@ class FeatureFilter(STracksFilter):
         for track_id in tracks_feature.keys():
             val = tracks_feature[track_id]
             if val < self.min_val or val > self.max_val:
-                # remove fom data
-                data = np.delete(data, data[:, 0] == track_id, axis=0)
+                # remove from data
+                stracks.data = np.delete(stracks.data,
+                                         stracks.data[:, 0] == track_id,
+                                         axis=0)
                 # remove from the graph
                 if track_id in keys:
                     graph.pop(track_id)
