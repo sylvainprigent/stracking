@@ -55,7 +55,7 @@ class STracks:
     """
     def __init__(self, data=None, properties=dict(),
                  graph=dict(), features=dict(),
-                 scale=None):
+                 scale=tuple()):
         self.data = data
         self.properties = properties
         self.graph = graph

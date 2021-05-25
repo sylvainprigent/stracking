@@ -13,10 +13,9 @@ def test_log_detector(tmp_path):
     my_test_file = os.path.join(root_dir, 'tracks1_crop.tif')
 
     image = io.imread(my_test_file)
-    image2 = np.transpose(image, (1, 2, 0))
 
     detector = LoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)
-    particles = detector.run(image2)
+    particles = detector.run(image)
     # print(particles.data)
 
     expected_output = [[0., 54., 12.],
@@ -45,10 +44,9 @@ def test_dog_detector(tmp_path):
     my_test_file = os.path.join(root_dir, 'tracks1_crop.tif')
 
     image = io.imread(my_test_file)
-    image2 = np.transpose(image, (1, 2, 0))
 
     detector = DoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)
-    particles = detector.run(image2)
+    particles = detector.run(image)
 
     expected_output = [[0., 54., 12.],
                        [0., 94., 12.],
@@ -76,10 +74,9 @@ def test_doh_detector(tmp_path):
     my_test_file = os.path.join(root_dir, 'tracks1_crop.tif')
 
     image = io.imread(my_test_file)
-    image2 = np.transpose(image, (1, 2, 0))
 
     detector = DoHDetector(min_sigma=4, max_sigma=5, threshold=0.015)
-    particles = detector.run(image2)
+    particles = detector.run(image)
 
     expected_output = [[0., 53., 12.],
                        [0., 93., 11.],

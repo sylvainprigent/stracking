@@ -1,11 +1,11 @@
 import xml.etree.ElementTree as ET
 import numpy as np
 
-from ._reader import STrackReaderInterface
+from ._io import STrackIO
 from stracking.containers import STracks
 
 
-class TrackMateReader(STrackReaderInterface):
+class TrackMateIO(STrackIO):
     """Read a TrackMate model
 
     Parameters
@@ -36,7 +36,7 @@ class TrackMateReader(STrackReaderInterface):
             return True
         return False
 
-    def parse(self):
+    def read(self):
         self._tracks = np.empty((0, 5))
         # find model element
         for i in range(len(self._root)):
@@ -154,3 +154,6 @@ class TrackMateReader(STrackReaderInterface):
                             float(spot.attrib['POSITION_Z']),
                             float(spot.attrib['POSITION_Y']),
                             float(spot.attrib['POSITION_X'])]
+
+    def write(self):
+        raise Exception('TrackMateIO: not yet implemented')

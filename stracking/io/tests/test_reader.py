@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from stracking.readers._reader_function import read_tracks
+from stracking.io._reader_function import read_tracks
 from stracking.containers import STracks
 
 

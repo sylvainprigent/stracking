@@ -77,7 +77,7 @@ class IntensityProperty(SProperty):
             y = int(particles[i, 1])
             t = int(particles[i, 0])
             # get the disk coordinates
-            val = image[cc+y, rr+x, t]
+            val = image[t, cc+y, rr+x]
             mean_[i] = np.mean(val)
             std_[i] = np.std(val)
             min_[i] = np.min(val)
@@ -105,7 +105,7 @@ class IntensityProperty(SProperty):
             y = int(particles[i, 2])
             z = int(particles[i, 1])
             t = int(particles[i, 0])
-            val = image[zz+z, yy+y, xx+x, t]
+            val = image[t, zz+z, yy+y, xx+x]
             mean_[i] = np.mean(val)
             std_[i] = np.std(val)
             min_[i] = np.min(val)

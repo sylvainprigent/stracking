@@ -1,7 +1,7 @@
-from ._csv_reader import CSVReader
-from ._trackmate_reader import TrackMateReader
-from ._icy_reader import ICYReader
-from ._isbi_reader import ISBIReader
+from ._csv_io import CSVIO
+from ._trackmate_io import TrackMateIO
+from ._icy_io import ICYIO
+from ._isbi_io import ISBIIO
 
 
 def read_tracks(file_path):
@@ -22,29 +22,29 @@ def read_tracks(file_path):
     """
     print("read tracks:", file_path)
     # CSV
-    csv_reader = CSVReader(file_path)
+    csv_reader = CSVIO(file_path)
     if csv_reader.is_compatible():
-        csv_reader.parse()
+        csv_reader.read()
         return csv_reader.stracks
 
     # TrackMate
-    trackmate_reader = TrackMateReader(file_path)
+    trackmate_reader = TrackMateIO(file_path)
     if trackmate_reader.is_compatible():
-        trackmate_reader.parse()
+        trackmate_reader.read()
         return trackmate_reader.stracks
 
     # ICY
-    icy_reader = ICYReader(file_path)
+    icy_reader = ICYIO(file_path)
     if icy_reader.is_compatible():
         print('is compatible ICY :', file_path)
-        icy_reader.parse()
+        icy_reader.read()
         return icy_reader.stracks
 
     # ICY
-    isbi_reader = ISBIReader(file_path)
+    isbi_reader = ISBIIO(file_path)
     if isbi_reader.is_compatible():
         print('is compatible ISBI :', file_path)
-        isbi_reader.parse()
+        isbi_reader.read()
         return isbi_reader.stracks
 
     print('is not compatible at all :', file_path)

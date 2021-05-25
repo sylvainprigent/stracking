@@ -57,5 +57,5 @@ def fake_tracks1():
         LLSM AP2 image.
     """
 
-    return np.transpose(_load("fake_tracks1.tif"), (1, 2, 0))
+    return _load("fake_tracks1.tif")
 

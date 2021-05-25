@@ -1,12 +1,12 @@
 import numpy as np
 import xml.etree.ElementTree as ET
 
-from ._reader import STrackReaderInterface
+from ._io import STrackIO
 from stracking.containers import STracks
 
 
-class ISBIReader(STrackReaderInterface):
-    """Read a TrackMate model
+class ISBIIO(STrackIO):
+    """Read/Write a ISBI XML tracks format
 
     Parameters
     ----------
@@ -30,7 +30,7 @@ class ISBIReader(STrackReaderInterface):
                     return True
         return False
 
-    def parse(self):
+    def read(self):
         root = self._tree.getroot()
         tracks = np.empty((0, 5))
 
@@ -55,3 +55,6 @@ class ISBIReader(STrackReaderInterface):
                 tracks = np.concatenate((tracks, [row]), axis=0)
 
         self.stracks = STracks(data=tracks, properties=None, graph={})
+
+    def write(self):
+        raise Exception('ISBIIO write not yet implemented')

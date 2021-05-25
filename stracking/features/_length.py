@@ -17,7 +17,8 @@ class LengthFeature(SFeature):
         tracks_ids = np.unique(data[:, 0])
         length_features = dict()
         for t_id in tracks_ids:
-            length_features[t_id] = np.count_nonzero(data[:, 0] == t_id)
+            length_features[int(t_id)] = \
+                int(np.count_nonzero(data[:, 0] == t_id))
         stracks.features['length'] = length_features
         return stracks
 
@@ -55,7 +56,7 @@ class DistanceFeature(SFeature):
                 distance += \
                     math.sqrt(scale_x*pow(track[i+1, 2]-track[i, 2], 2) +
                               scale_y*pow(track[i+1, 3]-track[i, 3], 2))
-            distance_features[t_id] = distance
+            distance_features[int(t_id)] = distance
 
         stracks.features['distance'] = distance_features
         return stracks
@@ -81,7 +82,7 @@ class DistanceFeature(SFeature):
                     math.sqrt(scale_x*pow(track[i+1, 2]-track[i, 2], 2) +
                               scale_y*pow(track[i+1, 3]-track[i, 3], 2) +
                               scale_z*pow(track[i+1, 4]-track[i, 4], 2))
-            distance_features[t_id] = distance
+            distance_features[int(t_id)] = distance
 
         stracks.features['distance'] = distance_features
         return stracks
@@ -119,7 +120,7 @@ class DisplacementFeature(SFeature):
             displacement = \
                 math.sqrt(scale_x*pow(track[i_end, 2]-track[0, 2], 2) +
                           scale_y*pow(track[i_end, 3]-track[0, 3], 2))
-            displacement_features[t_id] = displacement
+            displacement_features[int(t_id)] = displacement
 
         stracks.features['displacement'] = displacement_features
         return stracks
@@ -144,7 +145,7 @@ class DisplacementFeature(SFeature):
                 math.sqrt(scale_x*pow(track[i_end, 2]-track[0, 2], 2) +
                           scale_y*pow(track[i_end, 3]-track[0, 3], 2) +
                           scale_z*pow(track[i_end, 4]-track[0, 4], 2))
-            displacement_features[t_id] = displacement
+            displacement_features[int(t_id)] = displacement
 
         stracks.features['displacement'] = displacement_features
         return stracks

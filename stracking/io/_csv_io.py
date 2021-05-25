@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
 
-from ._reader import STrackReaderInterface
+from ._io import STrackIO
 from stracking.containers import STracks
 
 
-class CSVReader(STrackReaderInterface):
-    """Read a TrackMate model
+class CSVIO(STrackIO):
+    """Read/write tracks from/to csv file
+
+    This format does not support split/merge events and tracks features
 
     Parameters
     ----------
@@ -22,7 +24,7 @@ class CSVReader(STrackReaderInterface):
             return True
         return False
 
-    def parse(self):
+    def read(self):
         df = pd.read_csv(self.file_path)
         headers = list(df.columns.values)
         in_tracks = df.to_numpy()
@@ -47,3 +49,6 @@ class CSVReader(STrackReaderInterface):
         # TODO: parse attributes
 
         self.stracks = STracks(data=tracks, properties=None, graph={})
+
+    def write(self):
+        raise Exception("CSV write not yet implemented")

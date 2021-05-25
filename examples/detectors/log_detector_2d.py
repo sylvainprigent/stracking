@@ -20,6 +20,6 @@ detector = LoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)
 particles = detector.run(image)
 
 # visualize in napari
-viewer = napari.view_image(np.transpose(image, (2, 0, 1)))
+viewer = napari.view_image(image)
 viewer.add_points(particles.data, size=2)
 napari.run()

@@ -1,11 +1,11 @@
 import numpy as np
 import xml.etree.ElementTree as ET
 
-from ._reader import STrackReaderInterface
+from ._io import STrackIO
 from stracking.containers import STracks
 
 
-class ICYReader(STrackReaderInterface):
+class ICYIO(STrackIO):
     """Read a TrackMate model
 
     Parameters
@@ -30,7 +30,7 @@ class ICYReader(STrackReaderInterface):
                     return True
         return False
 
-    def parse(self):
+    def read(self):
         root = self._tree.getroot()
         tracks = np.empty((0, 5))
 
@@ -74,3 +74,6 @@ class ICYReader(STrackReaderInterface):
                 graph[float(to_idx)] = [float(from_idx)]
 
         self.stracks = STracks(data=tracks, properties=None, graph=graph)
+
+    def write(self):
+        raise Exception('ICYIO: write not yet implemented')

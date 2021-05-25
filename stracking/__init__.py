@@ -78,7 +78,7 @@ else:
     #from .base import clone
     #from .utils._show_versions import show_versions
 
-    __all__ = ['containers', 'data', 'filters', 'readers']
+    __all__ = ['containers', 'data', 'filters', 'io']
 
 
 def setup_module(module):

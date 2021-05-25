@@ -1,7 +1,7 @@
 # Reader interface and service
 
-class STrackReaderInterface:
-    """Interface for a tracks reader
+class STrackIO:
+    """Interface for a tracks reader/write
 
     Parameters
     ----------
@@ -29,10 +29,15 @@ class STrackReaderInterface:
         """
         return False
 
-    def parse(self):
-        """Parse the track file
+    def read(self):
+        """Read a track file into STracks
 
         The parsed data are stored in the stracks attribute
 
         """
-        raise Exception('STrackReaderInterface is abstract')
+        raise Exception('STrackIO is abstract')
+
+    def write(self):
+        """Write tracks to file"""
+        raise Exception('STrackIO is abstract')
+

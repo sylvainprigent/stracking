@@ -57,14 +57,15 @@ class DoGDetector(SDetector):
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
-            for t in range(image.shape[2]):
-                frame = image[:, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :]
                 blobs = blob.blob_dog(frame, self.min_sigma, self.max_sigma,
                                       self.sigma_ratio, self.threshold,
                                       self.overlap)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 2] = blobs[:, 1]  # y
                 spots[:, 1] = blobs[:, 0]  # x
+                spots[:, 2] = blobs[:, 1]  # y
+
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
@@ -73,15 +74,16 @@ class DoGDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
-            for t in range(image.shape[3]):
-                frame = image[:, :, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :, :]
                 blobs = blob.blob_dog(frame, self.min_sigma, self.max_sigma,
                                       self.sigma_ratio, self.threshold,
                                       self.overlap)
                 spots = t * np.ones((blobs.shape[0], 4))
                 spots[:, 1] = blobs[:, 0]  # z
-                spots[:, 2] = blobs[:, 2]  # y
-                spots[:, 3] = blobs[:, 1]  # x
+                spots[:, 2] = blobs[:, 1]  # x
+                spots[:, 3] = blobs[:, 2]  # y
+
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
@@ -157,18 +159,15 @@ class LoGDetector(SDetector):
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
-            for t in range(image.shape[2]):
-                frame = image[:, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :]
                 blobs = blob.blob_log(frame, self.min_sigma,
                                       self.max_sigma,
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 2] = blobs[:, 1]  # y
                 spots[:, 1] = blobs[:, 0]  # x
-
-                #print('blobs:', blobs)
-                #print('concatenate spots: ', spots)
+                spots[:, 2] = blobs[:, 1]  # y
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
@@ -177,16 +176,16 @@ class LoGDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
-            for t in range(image.shape[3]):
-                frame = image[:, :, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :, :]
                 blobs = blob.blob_log(frame, self.min_sigma,
                                       self.max_sigma,
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t * np.ones((blobs.shape[0], 4))
                 spots[:, 1] = blobs[:, 0]  # z
-                spots[:, 2] = blobs[:, 2]  # y
-                spots[:, 3] = blobs[:, 1]  # x
+                spots[:, 2] = blobs[:, 1]  # x
+                spots[:, 3] = blobs[:, 2]  # y
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
@@ -261,15 +260,15 @@ class DoHDetector(SDetector):
         if image.ndim == 3:  # 2D+t
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
-            for t in range(image.shape[2]):
-                frame = image[:, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :]
                 blobs = blob.blob_doh(frame, self.min_sigma,
                                       self.max_sigma,
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t*np.ones((blobs.shape[0], 3))
-                spots[:, 2] = blobs[:, 1]  # y
                 spots[:, 1] = blobs[:, 0]  # x
+                spots[:, 2] = blobs[:, 1]  # y
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
@@ -278,16 +277,16 @@ class DoHDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
-            for t in range(image.shape[3]):
-                frame = image[:, :, :, t]
+            for t in range(image.shape[0]):
+                frame = image[t, :, :, :]
                 blobs = blob.blob_doh(frame, self.min_sigma,
                                       self.max_sigma,
                                       self.num_sigma, self.threshold,
                                       self.overlap, self.log_scale)
                 spots = t * np.ones((blobs.shape[0], 4))
                 spots[:, 1] = blobs[:, 0]  # z
-                spots[:, 2] = blobs[:, 2]  # y
-                spots[:, 3] = blobs[:, 1]  # x
+                spots[:, 2] = blobs[:, 1]  # x
+                spots[:, 3] = blobs[:, 2]  # y
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
