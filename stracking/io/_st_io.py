@@ -1,6 +1,8 @@
 import os
 import json
 
+import numpy as np
+
 from ._io import STrackIO
 from stracking.containers import STracks
 
@@ -31,23 +33,23 @@ class StIO(STrackIO):
             with open(self.file_path) as json_file:
                 json_data = json.load(json_file)
 
-        tracks = STracks()
+        self.stracks = STracks()
         if 'tracks' in json_data:
-            tracks.data = json_data['tracks']
+            self.stracks.data = np.array(json_data['tracks'])
         else:
             raise Exception('StIO reader: no tracks found in the input file')
 
         if 'properties' in json_data:
-            tracks.properties = json_data['properties']
+            self.stracks.properties = json_data['properties']
 
         if 'graph' in json_data:
-            tracks.properties = json_data['graph']
+            self.stracks.graph = json_data['graph']
 
         if 'features' in json_data:
-            tracks.properties = json_data['features']
+            self.stracks.features = json_data['features']
 
         if 'scale' in json_data:
-            tracks.properties = tuple(json_data['scale'])
+            self.stracks.scale = tuple(json_data['scale'])
 
     def write(self):
         json_data = dict()
