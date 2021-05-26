@@ -51,4 +51,4 @@ class CSVIO(STrackIO):
         self.stracks = STracks(data=tracks, properties=None, graph={})
 
     def write(self):
-        raise Exception("CSV write not yet implemented")
+        raise Exception("STracking cannot write to csv. Please use st.json")

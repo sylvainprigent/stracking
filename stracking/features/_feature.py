@@ -1,6 +1,8 @@
 # interfaces
+from stracking.observers import SObservable
 
-class SFeature:
+
+class SFeature(SObservable):
     """Interface for a particle feature measurement
 
     Parameters
@@ -10,7 +12,7 @@ class SFeature:
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
     def run(self, stracks, image=None):
         """Measure a track property
@@ -28,3 +30,4 @@ class SFeature:
             tracks with new feature
 
         """
+        raise Exception('SFeature is abstract')

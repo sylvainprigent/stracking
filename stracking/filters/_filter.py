@@ -1,7 +1,8 @@
 from stracking.containers import STracks
+from stracking.observers import SObservable
 
 
-class STracksFilter:
+class STracksFilter(SObservable):
     """Interface for a tracks filter
 
     A filter can select tracks based on properties of features
@@ -9,7 +10,7 @@ class STracksFilter:
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
     def run(self, stracks):
         """Run the filtering

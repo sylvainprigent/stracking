@@ -50,14 +50,19 @@ class IntensityProperty(SProperty):
         self.radius = radius
 
     def run(self, sparticles, image):
-
+        self.notify('processing')
+        self.progress(0)
         if image.ndim != sparticles.data.shape[1]:
             raise Exception('IntensityProperty: image and particles dimensions'
                             'do not match')
 
         if image.ndim == 4:
+            self.notify('done')
+            self.progress(100)
             return self._measure3d(sparticles, image)
         elif image.ndim == 3:
+            self.notify('done')
+            self.progress(100)
             return self._measure2d(sparticles, image)
         else:
             raise Exception('IntensityProperty: can process only (3D:2D+t) or '
@@ -73,6 +78,7 @@ class IntensityProperty(SProperty):
         max_ = np.zeros((particles.shape[0]))
 
         for i in range(particles.shape[0]):
+            self.progress(int(100*i/particles.shape[0]))
             x = int(particles[i, 2])
             y = int(particles[i, 1])
             t = int(particles[i, 0])
@@ -101,6 +107,7 @@ class IntensityProperty(SProperty):
         max_ = np.zeros((particles.shape[0]))
 
         for i in range(particles.shape[0]):
+            self.progress(int(100 * i / particles.shape[0]))
             x = int(particles[i, 3])
             y = int(particles[i, 2])
             z = int(particles[i, 1])

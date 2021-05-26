@@ -1,13 +1,14 @@
+from stracking.observers import SObservable
 
 
-class SProperty:
+class SProperty(SObservable):
     """Interface to implement a property measure
 
     Measure a property for each particle in a SParticles
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
     def run(self, sparticles, image):
         """Calculate the feature

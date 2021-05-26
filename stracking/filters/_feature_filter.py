@@ -28,11 +28,16 @@ class FeatureFilter(STracksFilter):
         if self.feature_name not in stracks.features:
             raise Exception('FeatureFilter: feature ' + self.feature_name +
                             ' not found')
-
+        self.notify('processing')
+        self.progress(0)
         tracks_feature = stracks.features[self.feature_name]
         graph = stracks.graph
         keys = graph.keys()
-        for track_id in tracks_feature.keys():
+        t = -1
+        tracks_feature_keys = tracks_feature.keys()
+        for track_id in tracks_feature_keys:
+            t += 1
+            self.progress(int(100*t/len(tracks_feature_keys)))
             val = tracks_feature[track_id]
             if val < self.min_val or val > self.max_val:
                 # remove from data
@@ -46,5 +51,7 @@ class FeatureFilter(STracksFilter):
                     if track_id in graph[key]:
                         graph[key].remove(track_id)
                 # TODO remove track from features
+        self.notify('done')
+        self.progress(100)
         return stracks
 

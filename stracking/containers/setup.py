@@ -19,7 +19,7 @@ def configuration(parent_package='', top_path=None):
     config = Configuration('containers', parent_package, top_path)
 
     # submodules which have their own setup.py
-    config.add_subpackage('tests')
+    #config.add_subpackage('tests')
 
     # Skip cythonization as we do not want to include the generated
     # C/C++ files in the release tarballs as they are not necessarily

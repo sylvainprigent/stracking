@@ -76,4 +76,4 @@ class ICYIO(STrackIO):
         self.stracks = STracks(data=tracks, properties=None, graph=graph)
 
     def write(self):
-        raise Exception('ICYIO: write not yet implemented')
+        raise Exception('STracking cannot write to ICY XML. Please use st.json')

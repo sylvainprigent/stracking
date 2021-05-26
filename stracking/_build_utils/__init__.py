@@ -6,7 +6,7 @@ Utilities useful during the build.
 
 
 import os
-import restorationpy
+import stracking
 import contextlib
 
 from distutils.version import LooseVersion
@@ -16,7 +16,7 @@ from .openmp_helpers import check_openmp_support
 from .min_dependencies import CYTHON_MIN_VERSION
 
 
-DEFAULT_ROOT = 'restorationpy'
+DEFAULT_ROOT = 'stracking'
 
 
 def _check_cython_version():
@@ -44,19 +44,19 @@ def cythonize_extensions(top_path, config):
     # code even without OpenMP
     basic_check_build()
 
-    # check simple compilation with OpenMP. If it fails restorationpy will
+    # check simple compilation with OpenMP. If it fails strcking will
     # be built without OpenMP and the test test_openmp_supported in the test
     # suite will fail.
     # `check_openmp_support` compiles a small test program to see if the
     # compilers are properly configured to build with OpenMP. This is expensive
     # and we only want to call this function once.
     # The result of this check is cached as a private attribute on the
-    # restorationpy module (only at build-time) to be used twice:
-    # - First to set the value of RESTORATIONPY_OPENMP_PARALLELISM_ENABLED, the
+    # stracking module (only at build-time) to be used twice:
+    # - First to set the value of STRACKING_OPENMP_PARALLELISM_ENABLED, the
     #   cython build-time variable passed to the cythonize() call.
     # - Then in the build_ext subclass defined in the top-level setup.py file
     #   to actually build the compiled extensions with OpenMP flags if needed.
-    restorationpy._OPENMP_SUPPORTED = check_openmp_support()
+    stracking._OPENMP_SUPPORTED = check_openmp_support()
 
     n_jobs = 1
     with contextlib.suppress(ImportError):
@@ -71,7 +71,7 @@ def cythonize_extensions(top_path, config):
         config.ext_modules,
         nthreads=n_jobs,
         compile_time_env={
-            'RESTORATIONPY_OPENMP_PARALLELISM_ENABLED': restorationpy._OPENMP_SUPPORTED},
+            'STRACKING_OPENMP_PARALLELISM_ENABLED': stracking._OPENMP_SUPPORTED},
         compiler_directives={'language_level': 3})
 
 

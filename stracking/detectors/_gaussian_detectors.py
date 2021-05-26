@@ -54,10 +54,14 @@ class DoGDetector(SDetector):
         detections: SParticles
 
         """
+        self.notify('processing')
+        self.progress(0)
         if image.ndim == 3:  # 2D+t
+            self.notify('processing 2D+t')
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
+                self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :]
                 blobs = blob.blob_dog(frame, self.min_sigma, self.max_sigma,
                                       self.sigma_ratio, self.threshold,
@@ -66,15 +70,18 @@ class DoGDetector(SDetector):
                 spots[:, 1] = blobs[:, 0]  # x
                 spots[:, 2] = blobs[:, 1]  # y
 
-
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
+            self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
             for t in range(image.shape[0]):
+                self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
                 blobs = blob.blob_dog(frame, self.min_sigma, self.max_sigma,
                                       self.sigma_ratio, self.threshold,
@@ -84,9 +91,10 @@ class DoGDetector(SDetector):
                 spots[:, 2] = blobs[:, 1]  # x
                 spots[:, 3] = blobs[:, 2]  # y
 
-
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('DoGDetector: can process only 2D+t or 3D+t images')
@@ -156,10 +164,14 @@ class LoGDetector(SDetector):
         detections: SParticles
 
         """
+        self.notify('processing')
+        self.progress(0)
         if image.ndim == 3:  # 2D+t
+            self.notify('processing 2D+t')
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
+                self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :]
                 blobs = blob.blob_log(frame, self.min_sigma,
                                       self.max_sigma,
@@ -171,12 +183,16 @@ class LoGDetector(SDetector):
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
+            self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
             for t in range(image.shape[0]):
+                self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
                 blobs = blob.blob_log(frame, self.min_sigma,
                                       self.max_sigma,
@@ -189,6 +205,8 @@ class LoGDetector(SDetector):
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('LoGDetector: can process only 2D+t or 3D+t images')
@@ -257,10 +275,14 @@ class DoHDetector(SDetector):
         detections: SParticles
 
         """
+        self.notify('processing')
+        self.progress(0)
         if image.ndim == 3:  # 2D+t
+            self.notify('processing 2D+t')
             spots_ = np.empty((0, 3))
             sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
+                self.progress(int(100*t/image.shape[0]))
                 frame = image[t, :, :]
                 blobs = blob.blob_doh(frame, self.min_sigma,
                                       self.max_sigma,
@@ -272,12 +294,16 @@ class DoHDetector(SDetector):
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
 
         elif image.ndim == 4:  # 3D+t
+            self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
             sigma_ = np.empty((0, 1))
             for t in range(image.shape[0]):
+                self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
                 blobs = blob.blob_doh(frame, self.min_sigma,
                                       self.max_sigma,
@@ -290,6 +316,8 @@ class DoHDetector(SDetector):
 
                 spots_ = np.concatenate((spots_, spots), axis=0)
                 sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+            self.notify('done')
+            self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
         else:
             raise Exception('DoHDetector: can process only 2D+t or 3D+t images')

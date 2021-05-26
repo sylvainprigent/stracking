@@ -47,6 +47,9 @@ class SPLinker(SLinker):
     def run(self, particles, image=None):
         self._detections = particles.data
 
+        self.notify('processing')
+        self.progress(0)
+
         print('detections shape=', self._detections.shape)
 
         if self._detections.shape[1] == 4:
@@ -58,6 +61,7 @@ class SPLinker(SLinker):
         detections_num = self._detections.shape[0]
 
         # 1- build the graph
+        self.notify('processing: build graph')
         graph = lil_matrix((detections_num + 2, detections_num + 2))
         source_idx = 0
         target_idx = detections_num + 1
@@ -100,6 +104,8 @@ class SPLinker(SLinker):
                                         * self.int_convert_coef)
 
         # 2- Optimize
+        self.progress(50)
+        self.notify('processing: shortest path')
         self.tracks_ = np.empty((0, self._detections.shape[1]+1))
         while 1:
             print('extract track...')
@@ -116,6 +122,9 @@ class SPLinker(SLinker):
                 break
             else:
                 self.tracks_ = np.concatenate((self.tracks_, track), axis=0)
+
+        self.progress(100)
+        self.notify('done')
         return STracks(data=self.tracks_, properties=None, graph={})
 
     def _path_to_track(self, graph, predecessors):

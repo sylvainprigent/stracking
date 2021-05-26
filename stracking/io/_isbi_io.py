@@ -57,4 +57,5 @@ class ISBIIO(STrackIO):
         self.stracks = STracks(data=tracks, properties=None, graph={})
 
     def write(self):
-        raise Exception('ISBIIO write not yet implemented')
+        raise Exception('STracking cannot write to ISBI CSV. '
+                        'Please use st.json')

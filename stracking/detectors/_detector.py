@@ -1,6 +1,7 @@
-# interface for detector
+from stracking.observers import SObservable
 
-class SDetector:
+
+class SDetector(SObservable):
     """Interface for a particle detector
 
     The parameters must be set to the constructor and the image data to the
@@ -13,7 +14,7 @@ class SDetector:
 
     """
     def __init__(self):
-        pass
+        super().__init__()
 
     def run(self, image):
         """Run the detection on a ND image

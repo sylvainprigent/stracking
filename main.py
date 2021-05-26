@@ -11,37 +11,49 @@ from stracking.features import (LengthFeature, DistanceFeature,
                                 DisplacementFeature)
 from stracking.properties import IntensityProperty
 from stracking.filters import FeatureFilter
-from stracking.io import StIO
+from stracking.io import StIO, TrackMateIO
 
+
+tracks_file = '/Users/sprigent/Documents/code/napari/stracking/stracking/io/tests/FakeTracks_TrackMate.xml'
+
+reader = TrackMateIO(tracks_file)
+reader.read()
+tracks = reader.stracks
+print(tracks.data)
+#print(tracks.features)
+print(tracks.properties)
+
+print('spot number=', tracks.data.shape[0])
+print('min intensity props num=', len(tracks.properties['MIN_INTENSITY']))
 
 # 2D+t image T X Y
 # 3D+t image T Z X Y
 
 # initialize the input data
-image = fake_tracks1()
-spots = np.array([[0., 54., 12.],
-                  [0., 94., 12.],
-                  [0., 14., 12.],
-                  [1., 55., 27.],
-                  [1., 94., 27.],
-                  [1., 14., 27.],
-                  [2., 94., 42.],
-                  [2., 54., 42.],
-                  [2., 14., 42.],
-                  [3., 94., 57.],
-                  [3., 14., 57.],
-                  [3., 54., 57.],
-                  [4., 54., 72.],
-                  [4., 94., 72.],
-                  [4., 14., 72.]])
-particles = SParticles(data=spots)
+#image = fake_tracks1()
+#spots = np.array([[0., 54., 12.],
+#                  [0., 94., 12.],
+#                  [0., 14., 12.],
+#                  [1., 55., 27.],
+#                  [1., 94., 27.],
+#                  [1., 14., 27.],
+#                  [2., 94., 42.],
+#                  [2., 54., 42.],
+#                  [2., 14., 42.],
+#                  [3., 94., 57.],
+#                  [3., 14., 57.],
+#                  [3., 54., 57.],
+#                  [4., 54., 72.],
+#                  [4., 94., 72.],
+#                  [4., 14., 72.]])
+#particles = SParticles(data=spots)
 
-# calculate the intensity properties with a particle of radius=2
-property_calc = IntensityProperty(radius=2)
-property_calc.run(particles, image)
+## calculate the intensity properties with a particle of radius=2
+#property_calc = IntensityProperty(radius=2)
+#property_calc.run(particles, image)
 
-# show the calculated properties
-print(particles.properties)
+## show the calculated properties
+#print(particles.properties)
 
 
 #image = np.transpose(io.imread('./stracking/data/fake_tracks1.tif'), (1, 2, 0))

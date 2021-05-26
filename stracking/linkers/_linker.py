@@ -1,5 +1,6 @@
 # interface for detector
 import numpy as np
+from stracking.observers import SObservable
 
 
 class SLinkerCost:
@@ -30,7 +31,7 @@ class SLinkerCost:
         raise Exception('SLinkerCost: is abstract')
 
 
-class SLinker:
+class SLinker(SObservable):
     """Interface for a particle tracker
 
     The parameters must be set to the constructor and the image data and
@@ -49,6 +50,7 @@ class SLinker:
 
     """
     def __init__(self, cost=None):
+        super().__init__()
         self.cost = cost
 
     def run(self, particles, image=None):
