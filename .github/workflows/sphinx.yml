@@ -21,17 +21,19 @@ jobs:
     steps:
 
       # check out sources that will be used for autodocs, plus readme
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
 
       # didn't need to change anything here, but had to add sphinx.ext.githubpages
       # to my conf.py extensions list. that fixes the broken uploads
       - name: Building documentation
         run: |
+          pip install numpy
           pip install sphinx Pallets-Sphinx-Themes sphinx_rtd_theme
           cd docs
           make html
 
-      - name: Deploy 🚀
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
           branch: gh-pages # The branch the action should deploy to.
