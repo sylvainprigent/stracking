@@ -1,0 +1,53 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+  pull_request:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+jobs:
+  release_sphinx:
+    needs: [build]
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.6
+      volumes:
+        - dist:dist
+        - public:public
+    steps:
+
+      # check out sources that will be used for autodocs, plus readme
+      - uses: actions/checkout@v1
+
+      # download wheel that was build and uploaded in the build step
+      - uses: actions/download-artifact@v1
+        with:
+          name: distributions
+          path: dist
+
+      # didn't need to change anything here, but had to add sphinx.ext.githubpages
+      # to my conf.py extensions list. that fixes the broken uploads
+      - name: Building documentation
+        run: |
+          pip install dist/*.whl
+          pip install sphinx Pallets-Sphinx-Themes sphinx_rtd_theme
+          sphinx-apidoc --no-toc --module-first -o docs/autodoc src/stenotype
+          cd docs
+          make html
+
+      # still need to build and set the PAT to get a rebuild on the pages job,
+      # apart from that quite clean and nice
+      - name: github pages deploy
+        uses: peaceiris/actions-gh-pages@v2.3.1
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: public

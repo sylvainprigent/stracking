@@ -6,7 +6,7 @@ class SParticles:
     The container have two data. The particle array (N, D+1) of the particles
     and a properties dictionnary for the features
 
-    Parameters
+    Attributes
     ----------
     data : array (N, D+1)
         Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first

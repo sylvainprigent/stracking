@@ -27,7 +27,7 @@ builtins.__stracking_SETUP__ = True
 
 
 DISTNAME = 'stracking'
-DESCRIPTION = 'A set of python modules for image restoration'
+DESCRIPTION = 'Particles tracking for scientific imaging'
 with open('README.rst') as f:
     LONG_DESCRIPTION = f.read()
 MAINTAINER = 'Sylvain Prigent'

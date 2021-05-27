@@ -16,12 +16,12 @@ class SPLinker(SLinker):
     This tracker cannot handle split or merge events
 
     Example:
-          ```
+
           particles = SParticles(...)
           euclidean_cost = EuclideanCost(max_move=5.0)
           my_tracker = SPLinker(cost=euclidean_cost, gap=1)
           tracks = my_tracker.run(particles)
-          ```
+
 
     Parameters
     ----------
