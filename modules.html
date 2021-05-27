@@ -94,9 +94,9 @@
 <li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Available tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-stracking.containers">Containers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#detectors">Detectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#linkers">Linkers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stracking.detectors">Detectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stracking.properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stracking.linkers">Linkers</a></li>
 </ul>
 </li>
 </ul>
@@ -286,14 +286,252 @@ trackID=feature. Ex: features[‘length’][12]=25.2</p>
 </dd></dl>
 
 </div>
-<div class="section" id="detectors">
-<h2>Detectors<a class="headerlink" href="#detectors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-stracking.detectors">
+<span id="detectors"></span><h2>Detectors<a class="headerlink" href="#module-stracking.detectors" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.detectors.DoGDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.detectors.</span></span><span class="sig-name descname"><span class="pre">DoGDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.DoGDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect spots on 2D+t and 3d+t image using the DOG algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min_sigma</strong> (<em>scalar</em><em> or </em><em>sequence of scalars</em><em>, </em><em>optional</em>) – The minimum standard deviation for Gaussian kernel. Keep this low to
+detect smaller blobs. The standard deviations of the Gaussian filter
+are given for each axis as a sequence, or as a single number, in
+which case it is equal for all axes.</p></li>
+<li><p><strong>max_sigma</strong> (<em>scalar</em><em> or </em><em>sequence of scalars</em><em>, </em><em>optional</em>) – The maximum standard deviation for Gaussian kernel. Keep this high to
+detect larger blobs. The standard deviations of the Gaussian filter
+are given for each axis as a sequence, or as a single number, in
+which case it is equal for all axes.</p></li>
+<li><p><strong>sigma_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – The ratio between the standard deviation of Gaussian Kernels used for
+computing the Difference of Gaussian</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional.</em>) – The absolute lower bound for scale space maxima. Local maxima smaller
+than thresh are ignored. Reduce this to detect blobs with less
+intensities.</p></li>
+<li><p><strong>overlap</strong> (<em>float</em><em>, </em><em>optional</em>) – A value between 0 and 1. If the area of two blobs overlaps by a
+fraction greater than <cite>threshold</cite>, the smaller blob is eliminated.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.detectors.DoGDetector.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.DoGDetector.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the detection on a ND image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.detectors.DoHDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.detectors.</span></span><span class="sig-name descname"><span class="pre">DoHDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.DoHDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determinant of Hessian spots detector.</p>
+<p>Implementation from scikit-image
+Blobs are found using the Determinant of Hessian method . For each blob
+found, the method returns its coordinates and the standard deviation
+of the Gaussian Kernel used for the Hessian matrix whose determinant
+detected the blob.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min_sigma</strong> (<em>float</em><em>, </em><em>optional</em>) – The minimum standard deviation for Gaussian Kernel used to compute
+Hessian matrix. Keep this low to detect smaller blobs.</p></li>
+<li><p><strong>max_sigma</strong> (<em>float</em><em>, </em><em>optional</em>) – The maximum standard deviation for Gaussian Kernel used to compute
+Hessian matrix. Keep this high to detect larger blobs.</p></li>
+<li><p><strong>num_sigma</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of intermediate values of standard deviations to consider
+between <cite>min_sigma</cite> and <cite>max_sigma</cite>.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional.</em>) – The absolute lower bound for scale space maxima. Local maxima smaller
+than thresh are ignored. Reduce this to detect less prominent blobs.</p></li>
+<li><p><strong>overlap</strong> (<em>float</em><em>, </em><em>optional</em>) – A value between 0 and 1. If the area of two blobs overlaps by a
+fraction greater than <cite>threshold</cite>, the smaller blob is eliminated.</p></li>
+<li><p><strong>log_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set intermediate values of standard deviations are interpolated
+using a logarithmic scale to the base <cite>10</cite>. If not, linear
+interpolation is used.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.detectors.DoHDetector.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.DoHDetector.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the detection on a ND image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.detectors.LoGDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.detectors.</span></span><span class="sig-name descname"><span class="pre">LoGDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.LoGDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laplacian of Gaussian spots detector</p>
+<p>Detect blobs on an image using the Difference of Gaussian method. The
+implementation is from scikit-image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min_sigma</strong> (<em>scalar</em><em> or </em><em>sequence of scalars</em><em>, </em><em>optional</em>) – the minimum standard deviation for Gaussian kernel. Keep this low to
+detect smaller blobs. The standard deviations of the Gaussian filter
+are given for each axis as a sequence, or as a single number, in
+which case it is equal for all axes.</p></li>
+<li><p><strong>max_sigma</strong> (<em>scalar</em><em> or </em><em>sequence of scalars</em><em>, </em><em>optional</em>) – The maximum standard deviation for Gaussian kernel. Keep this high to
+detect larger blobs. The standard deviations of the Gaussian filter
+are given for each axis as a sequence, or as a single number, in
+which case it is equal for all axes.</p></li>
+<li><p><strong>num_sigma</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of intermediate values of standard deviations to consider
+between <cite>min_sigma</cite> and <cite>max_sigma</cite>.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional.</em>) – The absolute lower bound for scale space maxima. Local maxima smaller
+than thresh are ignored. Reduce this to detect blobs with less
+intensities.</p></li>
+<li><p><strong>overlap</strong> (<em>float</em><em>, </em><em>optional</em>) – A value between 0 and 1. If the area of two blobs overlaps by a
+fraction greater than <cite>threshold</cite>, the smaller blob is eliminated.</p></li>
+<li><p><strong>log_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set intermediate values of standard deviations are interpolated
+using a logarithmic scale to the base <cite>10</cite>. If not, linear
+interpolation is used.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.detectors.LoGDetector.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.LoGDetector.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the detection on a ND image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="properties">
-<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-stracking.properties">
+<span id="properties"></span><h2>Properties<a class="headerlink" href="#module-stracking.properties" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.properties.IntensityProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.properties.</span></span><span class="sig-name descname"><span class="pre">IntensityProperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.properties.IntensityProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the intensity properties of the partices</p>
+<p>This measure adds 5 properties: mean_intensity, min_intensity, max_intensity
+std_intensity and the radius parameter</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.properties.IntensityProperty.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparticles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.properties.IntensityProperty.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the feature</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sparticles</strong> (<a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles"><em>SParticles</em></a>) – Particles list</p></li>
+<li><p><strong>image</strong> (<em>array</em>) – 2D+t or 3D+t image array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>sparticles</strong> – input particles with the calculated feature added to the properties</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="linkers">
-<h2>Linkers<a class="headerlink" href="#linkers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-stracking.linkers">
+<span id="linkers"></span><h2>Linkers<a class="headerlink" href="#module-stracking.linkers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.linkers.EuclideanCost">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">EuclideanCost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.EuclideanCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the squared euclidean distance between two objects center</p>
+<p>It calculated the squared distance and not the distance to save computation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.linkers.EuclideanCost.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.EuclideanCost.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the cost of linking particle1 and particle2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particle1</strong> (<em>array</em>) – First particle data (t, Y, X) for 2D, (t, Z, Y, X) for 3D</p></li>
+<li><p><strong>particle2</strong> (<em>array</em>) – Second particle data (t, Y, X) for 2D, (t, Z, Y, X) for 3D</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cost</strong> – Link cost</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.linkers.SPLinker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">SPLinker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_track_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SPLinker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linker using Shortest Path algorithm</p>
+<p>Find the optimal trajectories by finding iteratively the shortest path in
+the graph of all the possible trajectories</p>
+<p>This tracker cannot handle split or merge events</p>
+<p class="rubric">Example</p>
+<p>particles = SParticles(…)
+euclidean_cost = EuclideanCost(max_move=5.0)
+my_tracker = SPLinker(cost=euclidean_cost, gap=1)
+tracks = my_tracker.run(particles)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cost</strong> (<em>SLinkerCost</em>) – Object defining the linker cost</p></li>
+<li><p><strong>gap</strong> (<em>int</em>) – Gap (in frame number) of possible missing detections</p></li>
+<li><p><strong>min_track_length</strong> (<em>int</em>) – Minimum number of connections in a selected track</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.linkers.SPLinker.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SPLinker.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the tracker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p></li>
+<li><p><strong>particles</strong> (<a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles"><em>SParticles</em></a>) – List of particles for each frames</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
