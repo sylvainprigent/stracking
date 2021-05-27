@@ -24,6 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.1
 
+      - name: Install rsync
+        run: |
+          apt-get update && apt-get install -y rsync
+
       # didn't need to change anything here, but had to add sphinx.ext.githubpages
       # to my conf.py extensions list. that fixes the broken uploads
       - name: Building documentation
