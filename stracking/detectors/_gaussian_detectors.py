@@ -132,15 +132,10 @@ class LoGDetector(SDetector):
         If set intermediate values of standard deviations are interpolated
         using a logarithmic scale to the base `10`. If not, linear
         interpolation is used.
-    calculate_mask : bool
-        if True, calculates the mask, False otherwise
-    calculate_labels : bool
-        if True, calculates the labels image, False otherwise
     """
 
     def __init__(self, min_sigma=1, max_sigma=50, num_sigma=10, threshold=.2,
-                 overlap=.5, log_scale=False, calculate_mask=False,
-                 calculate_labels=False):
+                 overlap=.5, log_scale=False):
         super().__init__()
         self.min_sigma = min_sigma
         self.max_sigma = max_sigma
@@ -148,8 +143,6 @@ class LoGDetector(SDetector):
         self.threshold = threshold
         self.overlap = overlap
         self.log_scale = log_scale
-        self.calculate_mask = calculate_mask
-        self.calculate_labels = calculate_labels
 
     def run(self, image):
         """Run the detection on a ND image
@@ -242,16 +235,11 @@ class DoHDetector(SDetector):
         If set intermediate values of standard deviations are interpolated
         using a logarithmic scale to the base `10`. If not, linear
         interpolation is used.
-    calculate_mask : bool
-        if True, calculates the mask, False otherwise
-    calculate_labels : bool
-        if True, calculates the labels image, False otherwise
 
     """
 
     def __init__(self, min_sigma=1, max_sigma=30, num_sigma=10, threshold=0.01,
-                 overlap=.5, log_scale=False, calculate_mask=False,
-                 calculate_labels=False):
+                 overlap=.5, log_scale=False):
         super().__init__()
         self.min_sigma = min_sigma
         self.max_sigma = max_sigma
@@ -259,8 +247,6 @@ class DoHDetector(SDetector):
         self.threshold = threshold
         self.overlap = overlap
         self.log_scale = log_scale
-        self.calculate_mask = calculate_mask
-        self.calculate_labels = calculate_labels
 
     def run(self, image):
         """Run the detection on a ND image

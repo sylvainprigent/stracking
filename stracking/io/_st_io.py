@@ -54,7 +54,11 @@ class StIO(STrackIO):
     def write(self):
         json_data = dict()
         json_data['tracks'] = self.stracks.data.tolist()
-        json_data['properties'] = self.stracks.properties
+
+        json_data['properties'] = dict()
+        for key in self.stracks.properties:
+            json_data['properties'][key] = self.stracks.properties[key].tolist()
+
         json_data['graph'] = self.stracks.graph
         json_data['features'] = self.stracks.features
         json_data['scale'] = list(self.stracks.scale)

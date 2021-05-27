@@ -230,16 +230,16 @@ def setup_package():
                                  'Operating System :: Unix',
                                  'Operating System :: MacOS',
                                  'Programming Language :: Python :: 3',
-                                 'Programming Language :: Python :: 3.6',
                                  'Programming Language :: Python :: 3.7',
                                  'Programming Language :: Python :: 3.8',
+                                 'Programming Language :: Python :: 3.9',
                                  ('Programming Language :: Python :: '
                                   'Implementation :: CPython'),
                                  ('Programming Language :: Python :: '
                                   'Implementation :: PyPy')
                                  ],
                     cmdclass=cmdclass,
-                    python_requires=">=3.6",
+                    python_requires=">=3.7",
                     install_requires=min_deps.tag_to_packages['install'],
                     package_data={'': ['*.pxd']},
                     **extra_setuptools_args)
@@ -262,7 +262,7 @@ def setup_package():
     else:
         if sys.version_info < (3, 6):
             raise RuntimeError(
-                "stracking requires Python 3.6 or later. The current"
+                "stracking requires Python 3.7 or later. The current"
                 " Python version is %s installed in %s."
                 % (platform.python_version(), sys.executable))
 
