@@ -43,11 +43,8 @@ jobs:
           cd docs
           make html
 
-      # still need to build and set the PAT to get a rebuild on the pages job,
-      # apart from that quite clean and nice
-      - name: github pages deploy
-        uses: peaceiris/actions-gh-pages@v2.3.1
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: public
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs/build/html # The folder the action should deploy.
