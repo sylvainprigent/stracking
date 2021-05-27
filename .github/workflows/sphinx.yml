@@ -28,7 +28,6 @@ jobs:
       - name: Building documentation
         run: |
           pip install sphinx Pallets-Sphinx-Themes sphinx_rtd_theme
-          sphinx-apidoc --no-toc --module-first -o docs/autodoc src/stenotype
           cd docs
           make html
 
