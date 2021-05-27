@@ -33,7 +33,7 @@ jobs:
       - name: Building documentation
         run: |
           pip install cython numpy scikit-image scipy
-          pip install sphinx Pallets-Sphinx-Themes sphinx_rtd_theme
+          pip install sphinx sphinx_rtd_theme
           cd docs
           make html
 
