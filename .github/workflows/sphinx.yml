@@ -15,7 +15,6 @@ on:
 
 jobs:
   release_sphinx:
-    needs: [build]
     runs-on: ubuntu-latest
     container:
       image: python:3.6
