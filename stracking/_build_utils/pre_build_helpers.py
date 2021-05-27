@@ -1,4 +1,4 @@
-"""Helpers to check build environment before build of scikit-bioimaging"""
+"""Helpers to check build environment before build of stracking"""
 
 import os
 import sys

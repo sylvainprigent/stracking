@@ -1,4 +1,4 @@
-"""All minimum dependencies for scikit-bioimaging."""
+"""All minimum dependencies for stracking."""
 import platform
 import argparse
 
