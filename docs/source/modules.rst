@@ -24,3 +24,9 @@ Linkers
 
 .. automodule:: stracking.linkers
     :members:
+
+IO
+--
+
+.. automodule:: stracking.io
+    :members:
