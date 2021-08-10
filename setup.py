@@ -31,14 +31,14 @@ DESCRIPTION = 'Particles tracking for scientific imaging'
 with open('README.rst') as f:
     LONG_DESCRIPTION = f.read()
 MAINTAINER = 'Sylvain Prigent'
-MAINTAINER_EMAIL = 'sylvain.prigent@inria.fr'
-URL = 'https://gitlab.inria.fr/serpico/stracking'
-DOWNLOAD_URL = 'https://gitlab.inria.fr/serpico/stracking'
-LICENSE = '???'
+MAINTAINER_EMAIL = 'meriadec.prigent@gmail.com'
+URL = 'https://github.com/sylvainprigent/stracking'
+DOWNLOAD_URL = 'https://github.com/sylvainprigent/stracking'
+LICENSE = 'GNU General Public License v3.0'
 PROJECT_URLS = {
-    'Bug Tracker': 'https://gitlab.inria.fr/serpico/stracking/issues',
+    'Bug Tracker': 'https://github.com/sylvainprigent/stracking/issues',
     'Documentation': '',
-    'Source Code': 'https://gitlab.inria.fr/serpico/stracking'
+    'Source Code': 'https://github.com/sylvainprigent/stracking'
 }
 
 # We can actually import a restricted version of stracking that
