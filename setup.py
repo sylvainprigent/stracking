@@ -33,11 +33,11 @@ with open('README.rst') as f:
 MAINTAINER = 'Sylvain Prigent'
 MAINTAINER_EMAIL = 'meriadec.prigent@gmail.com'
 URL = 'https://github.com/sylvainprigent/stracking'
-DOWNLOAD_URL = 'https://github.com/sylvainprigent/stracking'
+DOWNLOAD_URL = ''
 LICENSE = 'GNU General Public License v3.0'
 PROJECT_URLS = {
     'Bug Tracker': 'https://github.com/sylvainprigent/stracking/issues',
-    'Documentation': '',
+    'Documentation': 'https://sylvainprigent.github.io/stracking/',
     'Source Code': 'https://github.com/sylvainprigent/stracking'
 }
 
@@ -214,7 +214,7 @@ def setup_package():
                     description=DESCRIPTION,
                     license=LICENSE,
                     url=URL,
-                    download_url=DOWNLOAD_URL,
+                    #download_url=DOWNLOAD_URL,
                     project_urls=PROJECT_URLS,
                     version=VERSION,
                     long_description=LONG_DESCRIPTION,
