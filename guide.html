@@ -1,73 +1,34 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Guide &mdash; STracking 0.0.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Available tools" href="modules.html" />
     <link rel="prev" title="Quick start" href="quickstart.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> STracking
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,18 +36,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
@@ -109,73 +59,32 @@
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Available tools</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">STracking</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Guide</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="guide">
-<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="guide">
+<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline"></a></h1>
 <p><strong>STracking</strong> is a python framework to develop particles tracking pipeline. This library has been developped to track
 intra-cellular object in microscopy 2D+t and 3D+t images, but can be use to any spots tracking application in
 2D+t and 3D+t images.</p>
@@ -184,8 +93,8 @@ independantly in each time frame of the image. Then a <strong>linker</strong> al
 form the tracks. The we calculate the <strong>properties</strong> of the particles (size, intensity…) and the <strong>features</strong> of the
 tracks (length, distance…) to analyse them. A final step is the tracks <strong>filtering</strong> that uses the properties and
 features to select tracks of interest.</p>
-<div class="section" id="library-components">
-<h2>Library components<a class="headerlink" href="#library-components" title="Permalink to this headline">¶</a></h2>
+<section id="library-components">
+<h2>Library components<a class="headerlink" href="#library-components" title="Permalink to this headline"></a></h2>
 <p>The <strong>STracking</strong> library is made of one module per step of the pipeline. Plus one module for data containers:</p>
 <ul class="simple">
 <li><p><strong>Containers</strong>: <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">STracks</span></code> containers based on <code class="docutils literal notranslate"><span class="pre">Napari</span></code> points and track layer data structures to store particles and tracks</p></li>
@@ -195,8 +104,8 @@ features to select tracks of interest.</p>
 <li><p><strong>feature</strong>: define an interface and implementations of algorithms to measure tracks properties (length, displacement…)</p></li>
 <li><p><strong>filters</strong>: define an interface and implementations of algorithms to select tracks</p></li>
 </ul>
-<div class="section" id="containers">
-<h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h3>
+<section id="containers">
+<h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline"></a></h3>
 <p>The containers module has two classes <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">STracks</span></code> to facilitate the management of the <em>particles</em> and <em>tracks</em>
 data and metadata. The containers have been designed to be compatible with the Napari layers data structures.</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object contains a list of particles and there metadata in a 2D+t or 3D+t image. It contains 3 attributs:</p>
@@ -237,9 +146,9 @@ trackID=feature. Ex: features[‘length’][12]=25.2</p>
 </dd>
 </dl>
 </div></blockquote>
-</div>
-<div class="section" id="detectors">
-<h3>Detectors<a class="headerlink" href="#detectors" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="detectors">
+<h3>Detectors<a class="headerlink" href="#detectors" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SDetector</span></code> are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes a numpy array ( 2D+t or 3D+t image) as
 an input and returns detections in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object. The parameters of the detector have to be passed to it constructor.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">DoGDetector</span>
@@ -249,9 +158,9 @@ an input and returns detections in a <code class="docutils literal notranslate">
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="linkers">
-<h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linkers">
+<h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SLinker</span></code> are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the detections (in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code>
 object) and optionnaly a numpy array (the 2D+t or 3D+t image), and return the calculated trakcks in a <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object.
 The parameters of a linker have to be passed in the constructor. For example, the <code class="docutils literal notranslate"><span class="pre">SPLinker</span></code> (Shortest Path) linker need a
@@ -264,9 +173,9 @@ cost function, and a frame gap parameters:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="properties">
-<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SProperty</span></code> based objects are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the detections (in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code>
 object) and a numpy array (the 2D+t or 3D+t image), and returns the input <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> where the calculated properties have been added
 to the <code class="docutils literal notranslate"><span class="pre">SParticles.properties</span></code> dictionary. All the <code class="docutils literal notranslate"><span class="pre">SProperty</span></code> parameters have to be send to the constructor. Here is an
@@ -279,9 +188,9 @@ given radius:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="features">
-<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SFeature</span></code> based objects are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the tracks (in a <code class="docutils literal notranslate"><span class="pre">STRacks</span></code>
 object) and optionnaly a numpy array (the 2D+t or 3D+t image), and returns the input <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object where the calculated
 features have been added to the <code class="docutils literal notranslate"><span class="pre">STracks.features</span></code> dictionnary. Here is an example of the <code class="docutils literal notranslate"><span class="pre">DistanceFeature</span></code> that calculate
@@ -293,9 +202,9 @@ the distance a particle moved:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="filters">
-<h3>filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="filters">
+<h3>filters<a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SFilter</span></code> based objects are objects with the same interface. The have a <code class="docutils literal notranslate"><span class="pre">Run</span></code> method that takes the tracks (in a <code class="docutils literal notranslate"><span class="pre">STRacks</span></code>
 object) as input and return the same tracks object where filtered tracks have been removed:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.filters</span> <span class="kn">import</span> <span class="n">FeatureFilter</span>
@@ -304,10 +213,10 @@ object) as input and return the same tracks object where filtered tracks have be
 <span class="n">filter_calc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="read-and-write">
-<h2>Read and Write<a class="headerlink" href="#read-and-write" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="read-and-write">
+<h2>Read and Write<a class="headerlink" href="#read-and-write" title="Permalink to this headline"></a></h2>
 <p>The <strong>STracking</strong> library provides an extra module called <strong>io</strong>. It allows to read tracks data from many formats (JSON, CSV,
 Icy xml, ISBI xml, TrackMate xml…) and write the tracks in JSON format.
 To read a file, you can use the convenient method <code class="docutils literal notranslate"><span class="pre">read_tracks</span></code> that takes the path of an input file and return a <code class="docutils literal notranslate"><span class="pre">STracks</span></code>
@@ -335,9 +244,9 @@ attribut of the IO object.</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="pipeline">
-<h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pipeline">
+<h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this headline"></a></h2>
 <p>Writing a tracking pipeline with <strong>STracking</strong> is straightfarward. You just need to call the different modules in a sequence:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.data</span> <span class="kn">import</span> <span class="n">fake_tracks1</span>
 <span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">DoGDetector</span>
@@ -371,55 +280,38 @@ attribut of the IO object.</p>
 <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="modules.html" class="btn btn-neutral float-right" title="Available tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Available tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Sylvain Prigent.
-
-    </p>
+    <p>&#169; Copyright 2020, Sylvain Prigent.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
