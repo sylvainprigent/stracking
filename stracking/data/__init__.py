@@ -54,8 +54,26 @@ def fake_tracks1():
     Returns
     -------
     fake_traks1 : (119, 101, 5) float ndarray
-        LLSM AP2 image.
+        Moving points in 2D.
     """
 
     return _load("fake_tracks1.tif")
 
+
+def fake_tracks1_3d():
+    """3D+t particles moving simultaneously.
+
+    Returns
+    -------
+    fake_tracks1_3d: (5, 64, 128, 128) float ndarray
+        Moving points in 3D.
+    """
+
+    f1 = _load(os.path.join('tracks1_3d', 'track1_t001.tif'))
+    f2 = _load(os.path.join('tracks1_3d', 'track1_t002.tif'))
+    f3 = _load(os.path.join('tracks1_3d', 'track1_t003.tif'))
+    f4 = _load(os.path.join('tracks1_3d', 'track1_t004.tif'))
+    f5 = _load(os.path.join('tracks1_3d', 'track1_t005.tif'))
+
+    stack = np.stack([f1, f2, f3, f4, f5])
+    return stack
