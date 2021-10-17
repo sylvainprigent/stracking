@@ -79,7 +79,7 @@ class DoGDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
                 self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
@@ -183,7 +183,7 @@ class LoGDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
                 self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
@@ -287,7 +287,7 @@ class DoHDetector(SDetector):
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
             spots_ = np.empty((0, 4))
-            sigma_ = np.empty((0, 1))
+            sigma_ = np.empty((0,))
             for t in range(image.shape[0]):
                 self.progress(int(100 * t / image.shape[0]))
                 frame = image[t, :, :, :]
