@@ -70,8 +70,9 @@ class DoGDetector(SDetector):
                 spots[:, 1] = blobs[:, 0]  # x
                 spots[:, 2] = blobs[:, 1]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
@@ -91,8 +92,9 @@ class DoGDetector(SDetector):
                 spots[:, 2] = blobs[:, 1]  # x
                 spots[:, 3] = blobs[:, 2]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
@@ -174,8 +176,9 @@ class LoGDetector(SDetector):
                 spots[:, 1] = blobs[:, 0]  # x
                 spots[:, 2] = blobs[:, 1]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
@@ -196,8 +199,9 @@ class LoGDetector(SDetector):
                 spots[:, 2] = blobs[:, 1]  # x
                 spots[:, 3] = blobs[:, 2]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
@@ -278,8 +282,9 @@ class DoHDetector(SDetector):
                 spots[:, 1] = blobs[:, 0]  # x
                 spots[:, 2] = blobs[:, 1]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})
@@ -300,8 +305,9 @@ class DoHDetector(SDetector):
                 spots[:, 2] = blobs[:, 1]  # x
                 spots[:, 3] = blobs[:, 2]  # y
 
-                spots_ = np.concatenate((spots_, spots), axis=0)
-                sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
+                if spots.shape[0] > 0:
+                    spots_ = np.concatenate((spots_, spots), axis=0)
+                    sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
             return SParticles(data=spots_, properties={'radius': sigma_})

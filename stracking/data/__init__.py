@@ -2,7 +2,7 @@ import os.path as osp
 import os
 import numpy as np
 
-__all__ = ['fake_tracks1']
+__all__ = ['fake_tracks1', 'fake_tracks1_3d']
 
 legacy_data_dir = osp.abspath(osp.dirname(__file__))
 
