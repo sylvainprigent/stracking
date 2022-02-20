@@ -112,7 +112,23 @@ class IntensityProperty(SProperty):
             y = int(particles[i, 2])
             z = int(particles[i, 1])
             t = int(particles[i, 0])
-            val = image[t, zz+z, yy+y, xx+x]
+
+            zzz = [w+z for w in zz]
+            yyy = [w+y for w in yy]
+            xxx = [w+x for w in xx]
+            
+            xxxx=[]
+            yyyy=[]
+            zzzz=[]
+
+            for ii in range(0,len(zz)):
+                if zzz[ii]<image.shape[1] and yyy[ii]<image.shape[2] and xxx[ii]<image.shape[3]:
+                    xxxx.append(xxx[ii])
+                    yyyy.append(yyy[ii])
+                    zzzz.append(zzz[ii])
+
+            
+            val = image[t,zzzz,yyyy,xxxx]
             mean_[i] = np.mean(val)
             std_[i] = np.std(val)
             min_[i] = np.min(val)
@@ -125,3 +141,4 @@ class IntensityProperty(SProperty):
         sparticles.properties['radius'] = \
             self.radius * np.ones((particles.shape[0]))
         return sparticles
+
