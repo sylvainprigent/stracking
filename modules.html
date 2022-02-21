@@ -85,13 +85,13 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.containers.</span></span><span class="sig-name descname"><span class="pre">SParticles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.containers.SParticles" title="Permalink to this definition"></a></dt>
 <dd><p>Container for particles</p>
 <p>The container have two data. The particle array (N, D+1) of the particles
-and a properties dictionnary for the features</p>
+and a properties dictionary for the features</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="stracking.containers.SParticles.data">
 <span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#stracking.containers.SParticles.data" title="Permalink to this definition"></a></dt>
-<dd><p>Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
-axis is the integer ID of the track. D is either 3 or 4 for planar
-or volumetric timeseries respectively.</p>
+<dd><p>Coordinates for N points in D+1 dimensions. T,(Z),Y,X. The first
+axis is the integer ID of the time point. D is either 2 or 3 for planar
+or volumetric time series respectively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>array (N, D+1)</p>
