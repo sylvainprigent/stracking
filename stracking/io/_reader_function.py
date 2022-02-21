@@ -2,6 +2,27 @@ from ._csv_io import CSVIO
 from ._trackmate_io import TrackMateIO
 from ._icy_io import ICYIO
 from ._isbi_io import ISBIIO
+from ._st_io import StIO
+
+
+def write_tracks(file_path, tracks, format_='st.json'):
+    """Write tracks to file
+
+    Parameters
+    ----------
+    file_path: str
+        Path of the destination file
+    tracks: STracks
+        Container of tracks to be saved
+    format_: str
+        Name of the file format ('st.json', 'CSV', 'ICY', 'Trackmate')
+
+    """
+    if format_ == 'st.json':
+        writer = StIO(file_path)
+        writer.write(tracks)
+    else:
+        raise IOError(f'Format {format_} not (yet) supported')
 
 
 def read_tracks(file_path):

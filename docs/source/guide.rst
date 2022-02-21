@@ -1,13 +1,13 @@
 Guide
 =====
 
-**STracking** is a python framework to develop particles tracking pipeline. This library has been developped to track 
+**STracking** is a python framework to develop particles tracking pipeline. This library has been developed to track
 intra-cellular object in microscopy 2D+t and 3D+t images, but can be use to any spots tracking application in 
 2D+t and 3D+t images.
 
-A particles tracking pipeline is decomposed into sequancial steps. First the particles are **detected** individually and 
-independantly in each time frame of the image. Then a **linker** algorithm is used to link particles between frames and 
-form the tracks. The we calculate the **properties** of the particles (size, intensity...) and the **features** of the 
+A particles tracking pipeline is decomposed into sequential steps. First the particles are **detected** individually and
+independently in each time frame of the image. Then a **linker** algorithm is used to link particles between frames and
+form the tracks. Then we calculate the **properties** of the particles (size, intensity...) and the **features** of the
 tracks (length, distance...) to analyse them. A final step is the tracks **filtering** that uses the properties and 
 features to select tracks of interest.
 
@@ -16,7 +16,7 @@ Library components
 ------------------
 The **STracking** library is made of one module per step of the pipeline. Plus one module for data containers:
 
-* **Containers**: ``SParticles`` and ``STracks`` containers based on ``Napari`` points and track layer data structures to store particles and tracks
+* **Containers**: ``SParticles`` and ``STracks`` containers based on ``napari`` points and track layer data structures to store particles and tracks
 * **Detectors**: define a detector interface and implementations of particle detection algorithm for 2D and 3D image sequences
 * **Linkers**: define a linker interface and implementation of particle linkers (or trackers) for 2D and 3D image sequences
 * **properties**: define an interface and implementations of algorithms to measure properties of particles (intensity...)
@@ -27,26 +27,26 @@ Containers
 ~~~~~~~~~~
 
 The containers module has two classes ``SParticles`` and ``STracks`` to facilitate the management of the *particles* and *tracks*
-data and metadata. The containers have been designed to be compatible with the Napari layers data structures.
+data and metadata. The containers have been designed to be compatible with the napari layers data structures.
 
-A ``SParticles`` object contains a list of particles and there metadata in a 2D+t or 3D+t image. It contains 3 attributs:
+A ``SParticles`` object contains a list of particles and there metadata in a 2D+t or 3D+t image. It contains 3 attributes:
 
     data : array (N, D+1)
         Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
         axis is the integer ID of the track. D is either 3 or 4 for planar
-        or volumetric timeseries respectively.
+        or volumetric time series respectively.
     properties : dict {str: array (N,)}, DataFrame
         Properties for each point. Each property should be an array of length N,
         where N is the number of points.
     scale : tuple of float
         Scale factors for the image data.
 
-A ``STracks`` object contains a list of tracks and there metadata in a 2D+t or 3D+t image. It contains 5 attributs:
+A ``STracks`` object contains a list of tracks and there metadata in a 2D+t or 3D+t image. It contains 5 attributes:
 
     data : array (N, D+1)
         Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
         axis is the integer ID of the track. D is either 3 or 4 for planar
-        or volumetric timeseries respectively.
+        or volumetric time series respectively.
     properties : dict {str: array (N,)}, DataFrame
         Properties for each point. Each property should be an array of length N,
         where N is the number of points.
@@ -83,7 +83,7 @@ Linkers
 ~~~~~~~
 
 ``SLinker`` are objects with the same interface. They have a ``run`` method that takes the detections (in a ``SParticles`` 
-object) and optionnaly a numpy array (the 2D+t or 3D+t image), and return the calculated trakcks in a ``STracks`` object. 
+object) and optionally a numpy array (the 2D+t or 3D+t image), and return the calculated tracks in a ``STracks`` object.
 The parameters of a linker have to be passed in the constructor. For example, the ``SPLinker`` (Shortest Path) linker need a 
 cost function, and a frame gap parameters: 
 
@@ -103,7 +103,7 @@ Properties
 ``SProperty`` based objects are objects with the same interface. They have a ``run`` method that takes the detections (in a ``SParticles`` 
 object) and a numpy array (the 2D+t or 3D+t image), and returns the input ``SParticles`` where the calculated properties have been added
 to the ``SParticles.properties`` dictionary. All the ``SProperty`` parameters have to be send to the constructor. Here is an 
-example with the ``IntensityProperty`` algorithm that calculate the min, max, mean and std intensities inside the spots using a 
+example with the ``IntensityProperty`` algorithm that calculate the `min`, `max`, `mean` and `std` intensities inside the spots using a
 given radius:
 
 .. code-block:: python
@@ -118,8 +118,8 @@ Features
 ~~~~~~~~
 
 ``SFeature`` based objects are objects with the same interface. They have a ``run`` method that takes the tracks (in a ``STRacks``
-object) and optionnaly a numpy array (the 2D+t or 3D+t image), and returns the input ``STracks`` object where the calculated 
-features have been added to the ``STracks.features`` dictionnary. Here is an example of the ``DistanceFeature`` that calculate 
+object) and optionally a numpy array (the 2D+t or 3D+t image), and returns the input ``STracks`` object where the calculated
+features have been added to the ``STracks.features`` dictionary. Here is an example of the ``DistanceFeature`` that calculate
 the distance a particle moved:
 
 .. code-block:: python
@@ -158,8 +158,8 @@ object:
     from stracking.io import read_tracks
     tracks = read_tracks('path/to/the/tracks/file.xml'))
 
-You can also call alternativelly call the IO class from the dedicated format. Readed tracks are then available in the ``tracks`` 
-attribut of the IO object.
+You can also call alternatively call the IO class from the dedicated format. Read tracks are then available in the ``tracks``
+attribute of the IO object.
 
 .. code-block:: python
 
@@ -178,8 +178,35 @@ To write ``STracks`` into a file, the current version of **STracking** only supp
     from stracking.io import StIO
     ...
     writer = StIO('path/to/the/tracks/file.json')
-    writer.stracks = mytracks
-    writer.write()
+    writer.write(mytracks)
+    ...
+
+a more convenient function is the ``write_tracks`` function:
+
+.. code-block:: python
+
+    from stracking.io import write_tracks
+    ...
+    write_tracks('path/to/the/tracks/file.json', mytracks)
+    ...
+
+It is also possible to save the particles in a file. The supported format is a CSV file where each columns is a particle property.
+Mandatory properties are 'T', 'Y', 'X' coordinates for 2D+t particles and  'T', 'Z', 'Y', 'X' coordinates for 3D+t particles.
+To write particles to file you can use the ``write_particles`` function:
+.. code-block:: python
+
+    from stracking.io import write_particles
+    ...
+    write_particles('path/to/the/tracks/file.csv', particles)
+    ...
+
+And to read particles, the ``read_particles`` function:
+
+.. code-block:: python
+
+    from stracking.io import read_particles
+    ...
+    particles read_particles('path/to/the/tracks/file.csv')
     ...
 
 
@@ -187,7 +214,7 @@ To write ``STracks`` into a file, the current version of **STracking** only supp
 Pipeline
 --------   
 
-Writing a tracking pipeline with **STracking** is straightfarward. You just need to call the different modules in a sequence:
+Writing a tracking pipeline with **STracking** is straightforward. You just need to call the different modules in a sequence:
 
 .. code-block:: python
 
@@ -196,6 +223,7 @@ Writing a tracking pipeline with **STracking** is straightfarward. You just need
     from stracking.linkers import SPLinker, EuclideanCost
     from stracking.features import DistanceFeature
     from stracking.filters import FeatureFilter
+    from stracking.io import write_tracks
 
     # Load data
     image = fake_tracks1()
@@ -218,6 +246,4 @@ Writing a tracking pipeline with **STracking** is straightfarward. You just need
     filter_calc.run(tracks)
 
     # Save the tracks
-    writer = StIO('path/to/the/tracks/file.json')
-    writer.stracks = tracks
-    writer.write()
+    write_tracks('path/to/the/tracks/file.json', tracks)

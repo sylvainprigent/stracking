@@ -4,14 +4,14 @@ class SParticles:
     """Container for particles
 
     The container have two data. The particle array (N, D+1) of the particles
-    and a properties dictionnary for the features
+    and a properties dictionary for the features
 
     Attributes
     ----------
     data : array (N, D+1)
-        Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
-        axis is the integer ID of the track. D is either 3 or 4 for planar
-        or volumetric timeseries respectively.
+        Coordinates for N points in D+1 dimensions. T,(Z),Y,X. The first
+        axis is the integer ID of the time point. D is either 2 or 3 for planar
+        or volumetric time series respectively.
     properties : dict {str: array (N,)}, DataFrame
         Properties for each point. Each property should be an array of length N,
         where N is the number of points.

@@ -21,6 +21,7 @@ class StIO(STrackIO):
     """
     def __init__(self, file_path):
         super().__init__(file_path)
+        self.stracks = None
         self.indent = None
 
     def is_compatible(self):
@@ -51,13 +52,15 @@ class StIO(STrackIO):
         if 'scale' in json_data:
             self.stracks.scale = tuple(json_data['scale'])
 
-    def write(self):
+    def write(self, tracks):
+        self.stracks = tracks
         json_data = dict()
         json_data['tracks'] = self.stracks.data.tolist()
 
         json_data['properties'] = dict()
-        for key in self.stracks.properties:
-            json_data['properties'][key] = self.stracks.properties[key].tolist()
+        if self.stracks.properties is not None:
+            for key in self.stracks.properties:
+                json_data['properties'][key] = self.stracks.properties[key].tolist()
 
         json_data['graph'] = self.stracks.graph
         json_data['features'] = self.stracks.features
