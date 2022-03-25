@@ -242,7 +242,7 @@ Writing a tracking pipeline with **STracking** is straightforward. You just need
     feature_calc.run(tracks)
 
     # Keep only tracks that moves less than 60 pixels
-    filter_calc = FeatureFilter(feature_name='distance', min_val='20', max_val='60')
+    filter_calc = FeatureFilter(feature_name='distance', min_val=20, max_val=60)
     filter_calc.run(tracks)
 
     # Save the tracks

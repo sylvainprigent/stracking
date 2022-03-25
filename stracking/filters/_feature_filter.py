@@ -21,8 +21,18 @@ class FeatureFilter(STracksFilter):
     def __init__(self, feature_name, min_val, max_val):
         super().__init__()
         self.feature_name = feature_name
-        self.min_val = min_val
-        self.max_val = max_val
+        self.min_val = 0
+        self.max_val = 0
+        if isinstance(min_val, float) or isinstance(min_val, int):
+            self.min_val = min_val
+        else:
+            raise Exception(f"FeatureFilter max_val parameter must be a number not a "
+                            f"{type(min_val)}")
+        if isinstance(max_val, float) or isinstance(max_val, int):
+            self.max_val = max_val
+        else:
+            raise Exception(f"FeatureFilter max_val parameter must be a number not a "
+                            f"{type(max_val)}")
 
     def run(self, stracks):
         if self.feature_name not in stracks.features:

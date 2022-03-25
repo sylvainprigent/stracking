@@ -50,7 +50,7 @@ class SPLinker(SLinker):
         self.notify('processing')
         self.progress(0)
 
-        print('detections shape=', self._detections.shape)
+        # print('detections shape=', self._detections.shape)
 
         if self._detections.shape[1] == 4:
             self._dim = 3
@@ -73,7 +73,7 @@ class SPLinker(SLinker):
 
         # 1.2- connect detections that are close enough
         num_frames = len(num_obj_per_frame)
-        print('num frames=', num_frames)
+        #print('num frames=', num_frames)
         for frame in range(num_frames - 1):
             for nframe in range(1, self.gap_closing + 1):
                 n_frame = frame + nframe
@@ -89,8 +89,8 @@ class SPLinker(SLinker):
                             self.cost.run(self._detections[idx_obj1 - 1, :],
                                           self._detections[idx_obj2 - 1, :])
 
-                        print('cost=', cost_value)
-                        print('self.cost.max_cost=', self.cost.max_cost)
+                        #print('cost=', cost_value)
+                        #print('self.cost.max_cost=', self.cost.max_cost)
                         if cost_value < self.cost.max_cost:
                             if frame - n_frame - 1 > 0:
                                 graph[idx_obj1, idx_obj2] = \
@@ -108,7 +108,7 @@ class SPLinker(SLinker):
         self.notify('processing: shortest path')
         self.tracks_ = np.empty((0, self._detections.shape[1]+1))
         while 1:
-            print('extract track...')
+            #print('extract track...')
             # 2.1- Short path algorithm
             dist_matrix, predecessors = bellman_ford(csgraph=graph,
                                                      directed=True,
@@ -148,11 +148,11 @@ class SPLinker(SLinker):
         track = np.empty((0, self._detections.shape[1]+1))
         current = len(predecessors) - 1
         self.track_count_ += 1
-        print('dim in track to path=', self._dim)
+        #print('dim in track to path=', self._dim)
         while 1:
             pred = predecessors[current]
             if pred > 0:
-                print("add predecessor...")
+                #print("add predecessor...")
                 # remove the track nodes in the graph
                 graph[pred, :] = 0
                 graph[:, pred] = 0
