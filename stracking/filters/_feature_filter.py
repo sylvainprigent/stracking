@@ -64,4 +64,3 @@ class FeatureFilter(STracksFilter):
         self.notify('done')
         self.progress(100)
         return stracks
-

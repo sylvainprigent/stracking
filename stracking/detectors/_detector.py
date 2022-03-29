@@ -16,13 +16,15 @@ class SDetector(SObservable):
     def __init__(self):
         super().__init__()
 
-    def run(self, image):
+    def run(self, image, scale=None):
         """Run the detection on a ND image
 
         Parameters
         ----------
         image: ndarray
             time frames to analyse
+        scale: tuple or list
+            scale of the image in each dimension    
 
         Returns
         -------

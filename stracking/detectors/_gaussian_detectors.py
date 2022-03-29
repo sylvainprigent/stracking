@@ -41,13 +41,15 @@ class DoGDetector(SDetector):
         self.threshold = threshold
         self.overlap = overlap
 
-    def run(self, image):
+    def run(self, image, scale=None):
         """Run the detection on a ND image
 
         Parameters
         ----------
         image: ndarray
             time frames to analyse
+        scale: tuple or list
+            scale of the image in each dimension     
 
         Returns
         -------
@@ -75,7 +77,8 @@ class DoGDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
 
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
@@ -97,7 +100,7 @@ class DoGDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
         else:
             raise Exception('DoGDetector: can process only 2D+t or 3D+t images')
 
@@ -146,13 +149,15 @@ class LoGDetector(SDetector):
         self.overlap = overlap
         self.log_scale = log_scale
 
-    def run(self, image):
+    def run(self, image, scale=None):
         """Run the detection on a ND image
 
         Parameters
         ----------
         image: ndarray
             time frames to analyse
+        scale: tuple or list
+            scale of the image in each dimension 
 
         Returns
         -------
@@ -181,7 +186,7 @@ class LoGDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
 
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
@@ -204,7 +209,7 @@ class LoGDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
         else:
             raise Exception('LoGDetector: can process only 2D+t or 3D+t images')
 
@@ -252,13 +257,15 @@ class DoHDetector(SDetector):
         self.overlap = overlap
         self.log_scale = log_scale
 
-    def run(self, image):
+    def run(self, image, scale=None):
         """Run the detection on a ND image
 
         Parameters
         ----------
         image: ndarray
             time frames to analyse
+        scale: tuple or list
+            scale of the image in each dimension 
 
         Returns
         -------
@@ -287,7 +294,7 @@ class DoHDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 2]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
 
         elif image.ndim == 4:  # 3D+t
             self.notify('processing 3D+t')
@@ -310,6 +317,6 @@ class DoHDetector(SDetector):
                     sigma_ = np.concatenate((sigma_, blobs[:, 3]), axis=0)
             self.notify('done')
             self.progress(100)
-            return SParticles(data=spots_, properties={'radius': sigma_})
+            return SParticles(data=spots_, properties={'radius': sigma_}, scale=scale)
         else:
             raise Exception('DoHDetector: can process only 2D+t or 3D+t images')

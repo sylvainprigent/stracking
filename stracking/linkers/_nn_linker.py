@@ -59,4 +59,4 @@ class SNNLinker(SLinker):
 
         self.progress(100)
         self.notify('done')
-        return STracks(data=self.tracks_, properties=None, graph={})
+        return STracks(data=self.tracks_, properties=None, graph={}, scale=particles.scale)
