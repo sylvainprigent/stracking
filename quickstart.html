@@ -80,14 +80,14 @@
              
   <section id="quick-start">
 <h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline"></a></h1>
-<p>This is a quick start example of how to use the <strong>STracking</strong> library. This section supposed you know the principles
-of particles tracking. If it is not the case please refer to the
+<p>This is a quick start example of how to use the <strong>STracking</strong> library. This section supposes you to know the principles
+of particles tracking. If it is not the case, please refer to the
 <a class="reference external" href="guide">Guide</a>.</p>
 <section id="input-images">
 <h2>Input images<a class="headerlink" href="#input-images" title="Permalink to this headline"></a></h2>
 <p>Input images are 2D+t or 3D+t gray scaled images. 2D+t images are represented as numpy arrays with the following
 columns ordering <code class="docutils literal notranslate"><span class="pre">[T,</span> <span class="pre">Y,</span> <span class="pre">X]</span></code> and 3D+t images are represented with numpy array with <code class="docutils literal notranslate"><span class="pre">[T,</span> <span class="pre">Z,</span> <span class="pre">Y,</span> <span class="pre">X]</span></code> columns ordering</p>
-<p>First we load the image:</p>
+<p>First we load the images:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking</span> <span class="kn">import</span> <span class="n">data</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fake_tracks1</span><span class="p">()</span>
@@ -110,10 +110,10 @@ array, the properties of the particles as a <em>dict</em> and the image scale as
 </section>
 <section id="particles-linking">
 <h2>Particles linking<a class="headerlink" href="#particles-linking" title="Permalink to this headline"></a></h2>
-<p>The second step is liking the particles to create tracks.
+<p>The second step is linking the particles to create tracks.
 <strong>STracking</strong> provides <code class="docutils literal notranslate"><span class="pre">SLinker</span></code> interface to implement mulitple linking algorithms. In this quick start, we use the
 <em>Shorted path</em> graph based linker, using the Euclidean distance between particles as a link cost function:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.linkers</span> <span class="kn">import</span> <span class="n">SPLinker</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.linkers</span> <span class="kn">import</span> <span class="n">SPLinker</span><span class="p">,</span> <span class="n">EuclideanCost</span>
 
 <span class="n">euclidean_cost</span> <span class="o">=</span> <span class="n">EuclideanCost</span><span class="p">(</span><span class="n">max_cost</span><span class="o">=</span><span class="mi">3000</span><span class="p">)</span>
 <span class="n">my_tracker</span> <span class="o">=</span> <span class="n">SPLinker</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">euclidean_cost</span><span class="p">,</span> <span class="n">gap</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -122,11 +122,11 @@ array, the properties of the particles as a <em>dict</em> and the image scale as
 </div>
 <p>The output <code class="docutils literal notranslate"><span class="pre">tracks</span></code> in an instance of the <code class="docutils literal notranslate"><span class="pre">STracks</span></code> container. It contains the list of tracks as a numpy array and
 all the tracks metadata in dictionaries.</p>
-<p>The next steps are shows the usage of <code class="docutils literal notranslate"><span class="pre">SProperty</span></code>, <code class="docutils literal notranslate"><span class="pre">SFeature</span></code> and <code class="docutils literal notranslate"><span class="pre">SFilter</span></code> to analyse the trajectories</p>
+<p>The next steps show the usage of <code class="docutils literal notranslate"><span class="pre">SProperty</span></code>, <code class="docutils literal notranslate"><span class="pre">SFeature</span></code> and <code class="docutils literal notranslate"><span class="pre">SFilter</span></code> to analyse the trajectories</p>
 </section>
 <section id="particles-properties">
 <h2>Particles properties<a class="headerlink" href="#particles-properties" title="Permalink to this headline"></a></h2>
-<p>The tracks properties module allows to calculate properties for the particles. This quickstart example
+<p>The tracks properties module allows to calculate properties of the particles. This quickstart example
 shows how to calculate the intensity properties of particles:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.properties</span> <span class="kn">import</span> <span class="n">IntensityProperty</span>
 
@@ -134,12 +134,12 @@ shows how to calculate the intensity properties of particles:</p>
 <span class="n">property_calc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All the calculated properties are saved in the properties attribute of the <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> container</p>
+<p>All the calculated properties are saved in the properties attribute of the <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> container.</p>
 </section>
 <section id="tracks-features">
 <h2>Tracks features<a class="headerlink" href="#tracks-features" title="Permalink to this headline"></a></h2>
-<p>The tracks features allows to calculate feature of tracks like length, distance… This quickstart example shows how
-to calculate the distance feature of tracks:</p>
+<p>The tracks features module allows to calculate features of tracks like length and distance. This quickstart example shows how
+to calculate the distance of tracks:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.features</span> <span class="kn">import</span> <span class="n">DistanceFeature</span>
 
 <span class="n">feature_calc</span> <span class="o">=</span> <span class="n">DistanceFeature</span><span class="p">()</span>
@@ -150,15 +150,14 @@ to calculate the distance feature of tracks:</p>
 </section>
 <section id="tracks-filter">
 <h2>Tracks filter<a class="headerlink" href="#tracks-filter" title="Permalink to this headline"></a></h2>
-<p>The last module is the filter module. It allows to extract a subset of tracks base on defined criterion. In this
-quickstart example, we select the tracks that move less that a distance of 60 pixels:</p>
+<p>The last part is the filter module. It allows to extract a subset of tracks base on a defined criterion. In this example, we select the tracks that move less that a distance of 60 pixels:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.filters</span> <span class="kn">import</span> <span class="n">FeatureFilter</span>
 
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">FeatureFilter</span><span class="p">(</span><span class="n">feature_name</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
-<span class="n">filterd_tracks</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
+<span class="n">filtered_tracks</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>A filter return a <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object with the filtered set of tracks.</p>
+<p>Filtered set of tracks are return as a <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object.</p>
 </section>
 </section>
 
