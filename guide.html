@@ -86,7 +86,7 @@
   <section id="guide">
 <h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline"></a></h1>
 <p><strong>STracking</strong> is a python framework to develop particles tracking pipeline. This library has been developed to track
-intra-cellular object in microscopy 2D+t and 3D+t images, but can be use to any spots tracking application in
+intra-cellular object in microscopy 2D+t and 3D+t images, but can be use for any spots tracking application in
 2D+t and 3D+t images.</p>
 <p>A particles tracking pipeline is decomposed into sequential steps. First the particles are <strong>detected</strong> individually and
 independently in each time frame of the image. Then a <strong>linker</strong> algorithm is used to link particles between frames and
@@ -108,7 +108,7 @@ features to select tracks of interest.</p>
 <h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline"></a></h3>
 <p>The containers module has two classes <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">STracks</span></code> to facilitate the management of the <em>particles</em> and <em>tracks</em>
 data and metadata. The containers have been designed to be compatible with the napari layers data structures.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object contains a list of particles and there metadata in a 2D+t or 3D+t image. It contains 3 attributes:</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object contains a list of particles and their metadata in a 2D+t or 3D+t image. It contains 3 attributes:</p>
 <blockquote>
 <div><dl class="simple">
 <dt>data<span class="classifier">array (N, D+1)</span></dt><dd><p>Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
@@ -229,9 +229,9 @@ object:</p>
 attribute of the IO object.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.io</span> <span class="kn">import</span> <span class="n">TrackMateIO</span>
 
-<span class="n">reader</span> <span class="o">=</span> <span class="n">TrackMateIO</span><span class="p">(</span><span class="s1">&#39;path/to/the/trackmate/model/file.xml&#39;</span><span class="p">)</span>
-<span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">trackmate_reader</span><span class="o">.</span><span class="n">stracks</span><span class="p">)</span>
+<span class="n">trackmate_reader</span> <span class="o">=</span> <span class="n">TrackMateIO</span><span class="p">(</span><span class="s1">&#39;path/to/the/trackmate/model/file.xml&#39;</span><span class="p">)</span>
+<span class="n">trackmate_reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trackmate_reader</span><span class="o">.</span><span class="n">stracks</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To write <code class="docutils literal notranslate"><span class="pre">STracks</span></code> into a file, the current version of <strong>STracking</strong> only support the <em>JSON</em> format from the native

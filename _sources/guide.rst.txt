@@ -2,7 +2,7 @@ Guide
 =====
 
 **STracking** is a python framework to develop particles tracking pipeline. This library has been developed to track
-intra-cellular object in microscopy 2D+t and 3D+t images, but can be use to any spots tracking application in 
+intra-cellular object in microscopy 2D+t and 3D+t images, but can be use for any spots tracking application in 
 2D+t and 3D+t images.
 
 A particles tracking pipeline is decomposed into sequential steps. First the particles are **detected** individually and
@@ -29,7 +29,7 @@ Containers
 The containers module has two classes ``SParticles`` and ``STracks`` to facilitate the management of the *particles* and *tracks*
 data and metadata. The containers have been designed to be compatible with the napari layers data structures.
 
-A ``SParticles`` object contains a list of particles and there metadata in a 2D+t or 3D+t image. It contains 3 attributes:
+A ``SParticles`` object contains a list of particles and their metadata in a 2D+t or 3D+t image. It contains 3 attributes:
 
     data : array (N, D+1)
         Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
@@ -165,9 +165,9 @@ attribute of the IO object.
 
     from stracking.io import TrackMateIO
 
-    reader = TrackMateIO('path/to/the/trackmate/model/file.xml')
-    reader.read()
-    print(trackmate_reader.stracks)
+    trackmate_reader = TrackMateIO('path/to/the/trackmate/model/file.xml')
+    trackmate_reader.read()
+    print(trackmate_reader.stracks.data)
 
 
 To write ``STracks`` into a file, the current version of **STracking** only support the *JSON* format from the native 
