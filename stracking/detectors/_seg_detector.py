@@ -18,7 +18,7 @@ class SSegDetector(SDetector):
         True if the input image is a mask, false if input image is a label
 
     """
-    def __init__(self, is_mask):
+    def __init__(self, is_mask=False):
         super().__init__()
         self.is_mask = is_mask
 
@@ -44,7 +44,7 @@ class SSegDetector(SDetector):
             spots_ = np.empty((0, 3))
             for t in range(image.shape[0]):
                 self.progress(int(100 * t / image.shape[0]))
-                frame = image[t, :, :]
+                frame = np.int16(image[t, :, :])
                 if self.is_mask:
                     frame = label(frame, background=0)
                 props = regionprops(frame)
@@ -63,7 +63,7 @@ class SSegDetector(SDetector):
             spots_ = np.empty((0, 4))
             for t in range(image.shape[0]):
                 self.progress(int(100 * t / image.shape[0]))
-                frame = image[t, :, :, :]
+                frame = np.int16(image[t, :, :, :])
                 if self.is_mask:
                     frame = label(frame, background=0)
                 props = regionprops(frame)
@@ -79,4 +79,4 @@ class SSegDetector(SDetector):
             self.progress(100)
             return SParticles(data=spots_, properties={}, scale=scale)
         else:
-            raise Exception('SLabelsDetector: can process only 2D+t or 3D+t images')
+            raise Exception('SSegDetector: can process only 2D+t or 3D+t images')

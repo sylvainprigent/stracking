@@ -64,7 +64,10 @@ class StIO(STrackIO):
 
         json_data['graph'] = self.stracks.graph
         json_data['features'] = self.stracks.features
-        json_data['scale'] = list(self.stracks.scale)
+        if self.stracks.scale is not None:
+            json_data['scale'] = list(self.stracks.scale)
+        else:
+            json_data['scale'] = []
 
         # write the data to file
         with open(self.file_path, 'w') as outfile:

@@ -60,7 +60,12 @@ class FeatureFilter(STracksFilter):
                 for key in graph.keys():
                     if track_id in graph[key]:
                         graph[key].remove(track_id)
-                # TODO remove track from features
+                # remove track from features
+                for key, feature in stracks.features.items():
+                    new_feature = feature.copy()
+                    new_feature.pop(track_id)
+                    stracks.features[key] = new_feature
+
         self.notify('done')
         self.progress(100)
         return stracks

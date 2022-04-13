@@ -1,0 +1,58 @@
+{
+  "name": "pipeline1",
+  "author": "Sylvain Prigent",
+  "date": "2022-04-13",
+  "stracking_version": "0.1.8",
+  "steps": {
+    "detector": {
+      "name": "DoGDetector",
+      "parameters": {
+        "min_sigma": 4,
+        "max_sigma": 5,
+        "sigma_ratio": 1.1,
+        "threshold": 0.15,
+        "overlap": 0
+      }
+    },
+    "linker": {
+      "name": "SPLinker",
+      "cost": {
+          "name": "EuclideanCost",
+          "parameters": {}
+      },
+      "parameters": {
+        "gap": 1,
+        "min_track_length": 2
+      }
+    },
+    "properties": [
+      {
+        "name": "IntensityProperty",
+        "parameters": {
+          "radius": 2.5
+        }
+      }
+    ],
+    "features": [
+      {
+        "name": "LengthFeature"
+      },
+      {
+        "name": "DistanceFeature"
+      },
+      {
+        "name": "DisplacementFeature"
+      }
+    ],
+    "filters": [
+      {
+        "name": "FeatureFilter",
+        "parameters": {
+          "feature_name": "distance",
+          "min_val": 20,
+          "max_val": 60
+        }
+      }
+    ]
+  }
+}
