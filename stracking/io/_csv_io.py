@@ -46,9 +46,25 @@ class CSVIO(STrackIO):
             index = headers.index('x')
             tracks[:, 4] = in_tracks[:, index]
 
-        # TODO: parse attributes
-
+        default_headers = ['TrackID', 't', 'z', 'y', 'x']
+        properties = []
+        for head in headers:
+            if head not in default_headers:
+                property_ = []
+                index_head = headers.index(head)
+                for i in range(in_tracks.shape[0]):
+                    property_.append(in_tracks[i, index_head])
+                properties[head] = property_
         self.stracks = STracks(data=tracks, properties=None, graph={})
 
-    def write(self):
-        raise Exception("STracking cannot write to csv. Please use st.json")
+    def write(self, tracks):
+        self.stracks = tracks
+        # write tracks
+        columns = ['TrackID', 't', 'y', 'x']
+        if tracks.data.shape[1] == 5:
+            columns = ['TrackID', 't', 'z', 'y', 'x']
+        df = pd.DataFrame(data=tracks.data, index=None, columns=columns)
+        # write properties
+        for key, value in tracks.properties.items():
+            df = df.assign(key=value)
+

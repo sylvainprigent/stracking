@@ -50,6 +50,11 @@ class FeatureFilter(STracksFilter):
             self.progress(int(100*t/len(tracks_feature_keys)))
             val = tracks_feature[track_id]
             if val < self.min_val or val > self.max_val:
+                # remove the particles properties
+                idxs = np.where((stracks.data[:, 0] == track_id))
+                print('filter tracks point indexes=', idxs)
+                for property_ in stracks.properties:
+                    stracks.properties[property_] = np.delete(stracks.properties[property_], idxs)
                 # remove from data
                 stracks.data = np.delete(stracks.data,
                                          stracks.data[:, 0] == track_id,
@@ -65,6 +70,7 @@ class FeatureFilter(STracksFilter):
                     new_feature = feature.copy()
                     new_feature.pop(track_id)
                     stracks.features[key] = new_feature
+
 
         self.notify('done')
         self.progress(100)

@@ -37,7 +37,13 @@ class STrackIO:
         """
         raise Exception('STrackIO is abstract')
 
-    def write(self):
-        """Write tracks to file"""
+    def write(self, tracks):
+        """Write tracks to file
+
+        Parameters
+        ----------
+        tracks: STracks
+            Tracks to write
+        """
         raise Exception('STrackIO is abstract')
 

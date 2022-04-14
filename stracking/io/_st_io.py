@@ -60,7 +60,10 @@ class StIO(STrackIO):
         json_data['properties'] = dict()
         if self.stracks.properties is not None:
             for key in self.stracks.properties:
-                json_data['properties'][key] = self.stracks.properties[key].tolist()
+                if isinstance(self.stracks.properties[key], list):
+                    json_data['properties'][key] = self.stracks.properties[key]
+                else:
+                    json_data['properties'][key] = self.stracks.properties[key].tolist()
 
         json_data['graph'] = self.stracks.graph
         json_data['features'] = self.stracks.features

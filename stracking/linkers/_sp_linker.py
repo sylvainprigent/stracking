@@ -4,6 +4,7 @@ from scipy.sparse import lil_matrix
 from scipy.sparse.csgraph import bellman_ford
 
 from ._linker import SLinker, calculate_num_obj_per_frame
+from .utils import match_properties
 from stracking.containers import STracks
 
 
@@ -126,7 +127,9 @@ class SPLinker(SLinker):
         self.progress(100)
         self.notify('done')
         print('Create tracks with scale= ', particles.scale)
-        return STracks(data=self.tracks_, properties=None, graph={}, features={}, scale=particles.scale)
+        stracks = STracks(data=self.tracks_, properties=None,
+                          graph={}, features={}, scale=particles.scale)
+        return match_properties(particles, stracks)
 
     def _path_to_track(self, graph, predecessors):
         """Transform a predecessor path to a Track
