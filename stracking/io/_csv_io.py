@@ -66,5 +66,6 @@ class CSVIO(STrackIO):
         df = pd.DataFrame(data=tracks.data, index=None, columns=columns)
         # write properties
         for key, value in tracks.properties.items():
-            df = df.assign(key=value)
-
+            df[key] = value
+        print(df)
+        df.to_csv(self.file_path, index=False)

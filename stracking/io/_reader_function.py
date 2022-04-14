@@ -21,6 +21,9 @@ def write_tracks(file_path, tracks, format_='st.json'):
     if format_ == 'st.json':
         writer = StIO(file_path)
         writer.write(tracks)
+    elif format_ == 'csv':
+        writer = CSVIO(file_path)
+        writer.write(tracks)
     else:
         raise IOError(f'Format {format_} not (yet) supported')
 
@@ -67,6 +70,13 @@ def read_tracks(file_path):
         print('is compatible ISBI :', file_path)
         isbi_reader.read()
         return isbi_reader.stracks
+
+    # JSON
+    json_reader = StIO(file_path)
+    if json_reader.is_compatible():
+        print('is compatible STracking format :', file_path)
+        json_reader.read()
+        return json_reader.stracks
 
     print('is not compatible at all :', file_path)
     return None

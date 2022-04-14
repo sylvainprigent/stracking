@@ -25,7 +25,7 @@ class StIO(STrackIO):
         self.indent = None
 
     def is_compatible(self):
-        if self.file_path.endswith('.st.json'):
+        if self.file_path.endswith('.json'):
             return True
         return False
 
@@ -51,6 +51,8 @@ class StIO(STrackIO):
 
         if 'scale' in json_data:
             self.stracks.scale = tuple(json_data['scale'])
+            if len(self.stracks.scale) < self.stracks.data.shape[0]-1:
+                self.stracks.scale = list(np.ones(self.stracks.data.shape[1]-1))
 
     def write(self, tracks):
         self.stracks = tracks
