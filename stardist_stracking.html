@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 1: StarDist (Detection) + Stracking (Tracker) &mdash; STracking 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Available tools" href="modules.html" />
+    <link rel="prev" title="Guide" href="guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> STracking
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example 1: StarDist (Detection) + Stracking (Tracker)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#load-trained-mode">Load trained mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stardist-prediction-and-detection">StarDist: Prediction and detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-an-empty-napari-viewer">Create an empty napari viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display-input-and-stardist-prediction">Display Input and StarDist Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display-spots-from-stardist">Display spots from StarDist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linker">Linker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display-tracks">Display tracks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Available tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">STracking</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Example 1: StarDist (Detection) + Stracking (Tracker)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/stardist_stracking.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-1-stardist-detection-stracking-tracker">
+<h1>Example 1: StarDist (Detection) + Stracking (Tracker)<a class="headerlink" href="#example-1-stardist-detection-stracking-tracker" title="Permalink to this headline"></a></h1>
+<p>This example shows a combination of StarDist Detection and Stracking
+(Tracker)</p>
+<section id="load-trained-mode">
+<h2>Load trained mode<a class="headerlink" href="#load-trained-mode" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stardist.models import StarDist2D
+
+# prints a list of available models
+StarDist2D.from_pretrained()
+
+# creates a pretrained model
+model = StarDist2D.from_pretrained(&#39;2D_versatile_fluo&#39;)
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>There are 4 registered models for &#39;StarDist2D&#39;:
+
+Name                  Alias(es)
+────                  ─────────
+&#39;2D_versatile_fluo&#39;   &#39;Versatile (fluorescent nuclei)&#39;
+&#39;2D_versatile_he&#39;     &#39;Versatile (H&amp;E nuclei)&#39;
+&#39;2D_paper_dsb2018&#39;    &#39;DSB 2018 (from StarDist 2D paper)&#39;
+&#39;2D_demo&#39;             None
+Found model &#39;2D_versatile_fluo&#39; for &#39;StarDist2D&#39;.
+Loading network weights from &#39;weights_best.h5&#39;.
+Loading thresholds from &#39;thresholds.json&#39;.
+Using default values: prob_thresh=0.479071, nms_thresh=0.3.
+</pre></div>
+</div>
+</section>
+<section id="stardist-prediction-and-detection">
+<h2>StarDist: Prediction and detection<a class="headerlink" href="#stardist-prediction-and-detection" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from csbdeep.utils import normalize
+import matplotlib.pyplot as plt
+from tifffile import imread
+import numpy as np
+
+folder=&quot;&quot;
+filename=&quot;P31-crop2.tif&quot;
+
+img= imread(folder+filename)
+
+labels=np.zeros(img.shape);
+
+img=normalize(img)
+
+
+for i in range(img.shape[0]):
+    labels[i,:,:],details = model.predict_instances(img[i,:,:])
+    pointstemp= details[&#39;points&#39;]
+    X0 = i*np.ones((pointstemp.shape[0],1))
+    pointstemp = np.hstack((X0,pointstemp))
+    if i&gt;0:
+        points=np.concatenate((points,pointstemp),axis=0)
+    else:
+        points=pointstemp
+</pre></div>
+</div>
+</section>
+<section id="create-an-empty-napari-viewer">
+<h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%gui qt
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import napari
+from napari.utils import nbscreenshot
+viewer = napari.Viewer(axis_labels=&#39;tyx&#39;)
+</pre></div>
+</div>
+</section>
+<section id="display-input-and-stardist-prediction">
+<h2>Display Input and StarDist Prediction<a class="headerlink" href="#display-input-and-stardist-prediction" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>viewer.add_image(img, name=&#39;Input&#39;, multiscale=False,
+                 contrast_limits=[0, 3], colormap=&#39;gray&#39;,blending=&#39;additive&#39;);
+
+viewer.add_image(labels, name=&#39;Predictions StarDist&#39;, multiscale=False,
+                 colormap=&#39;gist_earth&#39;,blending=&#39;additive&#39;,opacity=0.2);
+
+nbscreenshot(viewer)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/output_Example1_1.png"><img alt="_images/output_Example1_1.png" src="_images/output_Example1_1.png" style="width: 600px;" /></a>
+</section>
+<section id="display-spots-from-stardist">
+<h2>Display spots from StarDist<a class="headerlink" href="#display-spots-from-stardist" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stracking.containers import SParticles
+
+particles = SParticles(data=points)
+viewer.add_points(particles.data, size=5, blending=&#39;additive&#39;)
+nbscreenshot(viewer)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/output_Example1_2.png"><img alt="_images/output_Example1_2.png" src="_images/output_Example1_2.png" style="width: 600px;" /></a>
+</section>
+<section id="linker">
+<h2>Linker<a class="headerlink" href="#linker" title="Permalink to this headline"></a></h2>
+<p>Shortest path tracking with euclidean cost</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stracking.linkers import SPLinker, EuclideanCost
+
+euclidean_cost = EuclideanCost(max_cost=100);
+my_tracker = SPLinker(cost=euclidean_cost, gap=1);
+tracks = my_tracker.run(particles);
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">detections</span> <span class="n">shape</span><span class="o">=</span> <span class="p">(</span><span class="mi">2652</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">num</span> <span class="n">frames</span><span class="o">=</span> <span class="mi">30</span>
+<span class="n">cost</span><span class="o">=</span> <span class="mf">60244.0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">max_cost</span><span class="o">=</span> <span class="mi">100</span>
+<span class="n">cost</span><span class="o">=</span> <span class="mf">256.0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">max_cost</span><span class="o">=</span> <span class="mi">100</span>
+<span class="n">cost</span><span class="o">=</span> <span class="mf">16.0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">max_cost</span><span class="o">=</span> <span class="mi">100</span>
+<span class="n">cost</span><span class="o">=</span> <span class="mf">11236.0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">max_cost</span><span class="o">=</span> <span class="mi">100</span>
+<span class="n">extract</span> <span class="n">track</span><span class="o">...</span>
+<span class="n">dim</span> <span class="ow">in</span> <span class="n">track</span> <span class="n">to</span> <span class="n">path</span><span class="o">=</span> <span class="mi">2</span>
+<span class="n">add</span> <span class="n">predecessor</span><span class="o">...</span>
+<span class="n">add</span> <span class="n">predecessor</span><span class="o">...</span>
+<span class="n">add</span> <span class="n">predecessor</span><span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="display-tracks">
+<h2>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this headline"></a></h2>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>viewer.add_tracks(tracks.data, name=&#39;Tracks&#39;)
+nbscreenshot(viewer)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/output_Example1_3.png"><img alt="_images/output_Example1_3.png" src="_images/output_Example1_3.png" style="width: 600px;" /></a>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide.html" class="btn btn-neutral float-left" title="Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Available tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Sylvain Prigent.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

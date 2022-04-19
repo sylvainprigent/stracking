@@ -14,6 +14,7 @@ Welcome to STracking's documentation!
    install
    quickstart
    guide
+   stardist_stracking
    modules
 
 
