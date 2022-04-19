@@ -1,4 +1,4 @@
-Example 1: StarDist (Detection) + Stracking (Tracker)
+Example 2: StarDist (Detection) + Stracking (Tracker)
 ==========================================
 
 This example shows a combination of StarDist Detection and Stracking
@@ -90,7 +90,7 @@ Display Input and StarDist Prediction
     nbscreenshot(viewer)
 
 
-.. image:: images/output_Example1_1.png
+.. image:: images/output_Example2_1.png
    :width: 600
 
 
@@ -108,7 +108,7 @@ Display spots from StarDist
 
 
 
-.. image:: images/output_Example1_2.png
+.. image:: images/output_Example2_2.png
    :width: 600
 
 
@@ -157,7 +157,7 @@ Display tracks
     nbscreenshot(viewer)
 
 
-.. image:: images/output_Example1_3.png
+.. image:: images/output_Example2_3.png
    :width: 600
 
 
