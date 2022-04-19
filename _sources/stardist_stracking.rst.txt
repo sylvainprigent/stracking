@@ -7,7 +7,7 @@ This example shows a combination of StarDist Detection and Stracking
 Load trained mode
 -----------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     from stardist.models import StarDist2D 
     
@@ -37,7 +37,7 @@ Load trained mode
 StarDist: Prediction and detection
 ----------------------------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     from csbdeep.utils import normalize
     import matplotlib.pyplot as plt
@@ -68,11 +68,9 @@ StarDist: Prediction and detection
 Create an empty napari viewer
 -----------------------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     %gui qt
-
-.. code:: ipython3
 
     import napari
     from napari.utils import nbscreenshot
@@ -81,7 +79,7 @@ Create an empty napari viewer
 Display Input and StarDist Prediction
 -------------------------------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     viewer.add_image(img, name='Input', multiscale=False,
                      contrast_limits=[0, 3], colormap='gray',blending='additive');
@@ -92,8 +90,6 @@ Display Input and StarDist Prediction
     nbscreenshot(viewer)
 
 
-
-
 .. image:: images/output_Example1_1.png
    :width: 600
 
@@ -101,7 +97,7 @@ Display Input and StarDist Prediction
 Display spots from StarDist
 ---------------------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     from stracking.containers import SParticles
     
@@ -122,7 +118,7 @@ Linker
 
 Shortest path tracking with euclidean cost
 
-.. code:: ipython3
+.. code-block:: python3
 
     from stracking.linkers import SPLinker, EuclideanCost
     
@@ -155,7 +151,7 @@ Shortest path tracking with euclidean cost
 Display tracks
 --------------
 
-.. code:: ipython3
+.. code-block:: python3
 
     viewer.add_tracks(tracks.data, name='Tracks')
     nbscreenshot(viewer)

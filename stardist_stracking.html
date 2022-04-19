@@ -86,13 +86,13 @@
 (Tracker)</p>
 <section id="load-trained-mode">
 <h2>Load trained mode<a class="headerlink" href="#load-trained-mode" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stardist.models import StarDist2D
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stardist.models</span> <span class="kn">import</span> <span class="n">StarDist2D</span>
 
-# prints a list of available models
-StarDist2D.from_pretrained()
+<span class="c1"># prints a list of available models</span>
+<span class="n">StarDist2D</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">()</span>
 
-# creates a pretrained model
-model = StarDist2D.from_pretrained(&#39;2D_versatile_fluo&#39;)
+<span class="c1"># creates a pretrained model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">StarDist2D</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;2D_versatile_fluo&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>There are 4 registered models for &#39;StarDist2D&#39;:
@@ -112,64 +112,63 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </section>
 <section id="stardist-prediction-and-detection">
 <h2>StarDist: Prediction and detection<a class="headerlink" href="#stardist-prediction-and-detection" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from csbdeep.utils import normalize
-import matplotlib.pyplot as plt
-from tifffile import imread
-import numpy as np
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">csbdeep.utils</span> <span class="kn">import</span> <span class="n">normalize</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-folder=&quot;&quot;
-filename=&quot;P31-crop2.tif&quot;
+<span class="n">folder</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="n">filename</span><span class="o">=</span><span class="s2">&quot;P31-crop2.tif&quot;</span>
 
-img= imread(folder+filename)
+<span class="n">img</span><span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="n">filename</span><span class="p">)</span>
 
-labels=np.zeros(img.shape);
+<span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">);</span>
 
-img=normalize(img)
+<span class="n">img</span><span class="o">=</span><span class="n">normalize</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 
 
-for i in range(img.shape[0]):
-    labels[i,:,:],details = model.predict_instances(img[i,:,:])
-    pointstemp= details[&#39;points&#39;]
-    X0 = i*np.ones((pointstemp.shape[0],1))
-    pointstemp = np.hstack((X0,pointstemp))
-    if i&gt;0:
-        points=np.concatenate((points,pointstemp),axis=0)
-    else:
-        points=pointstemp
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:],</span><span class="n">details</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_instances</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:])</span>
+    <span class="n">pointstemp</span><span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span>
+    <span class="n">X0</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">pointstemp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">pointstemp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X0</span><span class="p">,</span><span class="n">pointstemp</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">points</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">points</span><span class="p">,</span><span class="n">pointstemp</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">points</span><span class="o">=</span><span class="n">pointstemp</span>
 </pre></div>
 </div>
 </section>
 <section id="create-an-empty-napari-viewer">
 <h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%gui qt
-</pre></div>
-</div>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import napari
-from napari.utils import nbscreenshot
-viewer = napari.Viewer(axis_labels=&#39;tyx&#39;)
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">gui</span> <span class="n">qt</span>
+
+<span class="kn">import</span> <span class="nn">napari</span>
+<span class="kn">from</span> <span class="nn">napari.utils</span> <span class="kn">import</span> <span class="n">nbscreenshot</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">(</span><span class="n">axis_labels</span><span class="o">=</span><span class="s1">&#39;tyx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="display-input-and-stardist-prediction">
 <h2>Display Input and StarDist Prediction<a class="headerlink" href="#display-input-and-stardist-prediction" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>viewer.add_image(img, name=&#39;Input&#39;, multiscale=False,
-                 contrast_limits=[0, 3], colormap=&#39;gray&#39;,blending=&#39;additive&#39;);
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span> <span class="n">multiscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">contrast_limits</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">);</span>
 
-viewer.add_image(labels, name=&#39;Predictions StarDist&#39;, multiscale=False,
-                 colormap=&#39;gist_earth&#39;,blending=&#39;additive&#39;,opacity=0.2);
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Predictions StarDist&#39;</span><span class="p">,</span> <span class="n">multiscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;gist_earth&#39;</span><span class="p">,</span><span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">);</span>
 
-nbscreenshot(viewer)
+<span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/output_Example1_1.png"><img alt="_images/output_Example1_1.png" src="_images/output_Example1_1.png" style="width: 600px;" /></a>
 </section>
 <section id="display-spots-from-stardist">
 <h2>Display spots from StarDist<a class="headerlink" href="#display-spots-from-stardist" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stracking.containers import SParticles
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.containers</span> <span class="kn">import</span> <span class="n">SParticles</span>
 
-particles = SParticles(data=points)
-viewer.add_points(particles.data, size=5, blending=&#39;additive&#39;)
-nbscreenshot(viewer)
+<span class="n">particles</span> <span class="o">=</span> <span class="n">SParticles</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">points</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
+<span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/output_Example1_2.png"><img alt="_images/output_Example1_2.png" src="_images/output_Example1_2.png" style="width: 600px;" /></a>
@@ -177,11 +176,11 @@ nbscreenshot(viewer)
 <section id="linker">
 <h2>Linker<a class="headerlink" href="#linker" title="Permalink to this headline"></a></h2>
 <p>Shortest path tracking with euclidean cost</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from stracking.linkers import SPLinker, EuclideanCost
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.linkers</span> <span class="kn">import</span> <span class="n">SPLinker</span><span class="p">,</span> <span class="n">EuclideanCost</span>
 
-euclidean_cost = EuclideanCost(max_cost=100);
-my_tracker = SPLinker(cost=euclidean_cost, gap=1);
-tracks = my_tracker.run(particles);
+<span class="n">euclidean_cost</span> <span class="o">=</span> <span class="n">EuclideanCost</span><span class="p">(</span><span class="n">max_cost</span><span class="o">=</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">my_tracker</span> <span class="o">=</span> <span class="n">SPLinker</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">euclidean_cost</span><span class="p">,</span> <span class="n">gap</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">tracks</span> <span class="o">=</span> <span class="n">my_tracker</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">particles</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">detections</span> <span class="n">shape</span><span class="o">=</span> <span class="p">(</span><span class="mi">2652</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -204,8 +203,8 @@ tracks = my_tracker.run(particles);
 </section>
 <section id="display-tracks">
 <h2>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this headline"></a></h2>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>viewer.add_tracks(tracks.data, name=&#39;Tracks&#39;)
-nbscreenshot(viewer)
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tracks&#39;</span><span class="p">)</span>
+<span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/output_Example1_3.png"><img alt="_images/output_Example1_3.png" src="_images/output_Example1_3.png" style="width: 600px;" /></a>
