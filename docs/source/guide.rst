@@ -224,18 +224,29 @@ Writing a tracking pipeline with **STracking** is straightforward. You just need
     from stracking.features import DistanceFeature
     from stracking.filters import FeatureFilter
     from stracking.io import write_tracks
+    import napari
 
     # Load data
     image = fake_tracks1()
 
-    # detection
-    detector = DoGDetector(min_sigma=4, max_sigma=5, threshold=0.2)
+    # Open napari
+    viewer = napari.Viewer(axis_labels='tyx')
+    viewer.add_image(image, contrast_limits=[0, 300])
+
+    # Detection
+    detector = DoGDetector(min_sigma=3, max_sigma=5, threshold=0.2)
     particles = detector.run(image)
+
+    # Display spots
+    viewer.add_points(particles.data, size=4, face_color="red", edge_color="red", blending='opaque')
 
     # Linking
     euclidean_cost = EuclideanCost(max_cost=3000)
     my_tracker = SPLinker(cost=euclidean_cost, gap=1)
     tracks = my_tracker.run(particles)
+
+    # Display tracks
+    viewer.add_tracks(tracks.data, name='Tracks', colormap="hsv")
 
     # Calculate distance feature
     feature_calc = DistanceFeature()
@@ -244,6 +255,10 @@ Writing a tracking pipeline with **STracking** is straightforward. You just need
     # Keep only tracks that moves less than 60 pixels
     filter_calc = FeatureFilter(feature_name='distance', min_val=20, max_val=60)
     filter_calc.run(tracks)
+
+    # Display filtered tracks
+    viewer.add_tracks(tracks.data, name='Filtered Tracks',colormap="hsv")
+    napari.run()
 
     # Save the tracks
     write_tracks('path/to/the/tracks/file.json', tracks)
