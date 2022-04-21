@@ -279,18 +279,29 @@ write_particles(‘path/to/the/tracks/file.csv’, particles)
 <span class="kn">from</span> <span class="nn">stracking.features</span> <span class="kn">import</span> <span class="n">DistanceFeature</span>
 <span class="kn">from</span> <span class="nn">stracking.filters</span> <span class="kn">import</span> <span class="n">FeatureFilter</span>
 <span class="kn">from</span> <span class="nn">stracking.io</span> <span class="kn">import</span> <span class="n">write_tracks</span>
+<span class="kn">import</span> <span class="nn">napari</span>
 
 <span class="c1"># Load data</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">fake_tracks1</span><span class="p">()</span>
 
-<span class="c1"># detection</span>
-<span class="n">detector</span> <span class="o">=</span> <span class="n">DoGDetector</span><span class="p">(</span><span class="n">min_sigma</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c1"># Open napari</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">(</span><span class="n">axis_labels</span><span class="o">=</span><span class="s1">&#39;tyx&#39;</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">contrast_limits</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span>
+
+<span class="c1"># Detection</span>
+<span class="n">detector</span> <span class="o">=</span> <span class="n">DoGDetector</span><span class="p">(</span><span class="n">min_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">particles</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="c1"># Display spots</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">face_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;opaque&#39;</span><span class="p">)</span>
 
 <span class="c1"># Linking</span>
 <span class="n">euclidean_cost</span> <span class="o">=</span> <span class="n">EuclideanCost</span><span class="p">(</span><span class="n">max_cost</span><span class="o">=</span><span class="mi">3000</span><span class="p">)</span>
 <span class="n">my_tracker</span> <span class="o">=</span> <span class="n">SPLinker</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">euclidean_cost</span><span class="p">,</span> <span class="n">gap</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">tracks</span> <span class="o">=</span> <span class="n">my_tracker</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">particles</span><span class="p">)</span>
+
+<span class="c1"># Display tracks</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tracks&#39;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;hsv&quot;</span><span class="p">)</span>
 
 <span class="c1"># Calculate distance feature</span>
 <span class="n">feature_calc</span> <span class="o">=</span> <span class="n">DistanceFeature</span><span class="p">()</span>
@@ -299,6 +310,10 @@ write_particles(‘path/to/the/tracks/file.csv’, particles)
 <span class="c1"># Keep only tracks that moves less than 60 pixels</span>
 <span class="n">filter_calc</span> <span class="o">=</span> <span class="n">FeatureFilter</span><span class="p">(</span><span class="n">feature_name</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 <span class="n">filter_calc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
+
+<span class="c1"># Display filtered tracks</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Filtered Tracks&#39;</span><span class="p">,</span><span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;hsv&quot;</span><span class="p">)</span>
+<span class="n">napari</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="c1"># Save the tracks</span>
 <span class="n">write_tracks</span><span class="p">(</span><span class="s1">&#39;path/to/the/tracks/file.json&#39;</span><span class="p">,</span> <span class="n">tracks</span><span class="p">)</span>
