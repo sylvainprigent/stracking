@@ -46,8 +46,12 @@ class CSVIO(STrackIO):
             index = headers.index('x')
             tracks[:, 4] = in_tracks[:, index]
 
+        scale = [1, 1, 1]
+        if 'z' in headers:
+            scale = [1, 1, 1, 1]
+
         default_headers = ['TrackID', 't', 'z', 'y', 'x']
-        properties = []
+        properties = {}
         for head in headers:
             if head not in default_headers:
                 property_ = []
@@ -55,7 +59,7 @@ class CSVIO(STrackIO):
                 for i in range(in_tracks.shape[0]):
                     property_.append(in_tracks[i, index_head])
                 properties[head] = property_
-        self.stracks = STracks(data=tracks, properties=None, graph={})
+        self.stracks = STracks(data=tracks, properties=properties, graph={}, scale=scale)
 
     def write(self, tracks):
         self.stracks = tracks

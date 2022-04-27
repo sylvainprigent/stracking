@@ -95,6 +95,7 @@ class CSVParticlesIO:
                 data[index, 2] = row['X']
             particles.data = data
             particles.properties = CSVParticlesIO._read_properties(df)
+            particles.scale = [1, 1, 1]
             return particles
         elif 'T' in header and 'X' in header and 'Y' in header and 'Z' in header:  # 3D+t
             particles = SParticles()
@@ -106,6 +107,7 @@ class CSVParticlesIO:
                 data[index, 3] = row['X']
             particles.data = data
             particles.properties = CSVParticlesIO._read_properties(df)
+            particles.scale = [1, 1, 1, 1]
             return particles
         else:
             raise IOError('A CSV particle file must have T, Y, X columns')
