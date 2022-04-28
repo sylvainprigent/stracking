@@ -126,7 +126,7 @@ class SPLinker(SLinker):
 
         self.progress(100)
         self.notify('done')
-        print('Create tracks with scale= ', particles.scale)
+        #print('Create tracks with scale= ', particles.scale)
         stracks = STracks(data=self.tracks_, properties=None,
                           graph={}, features={}, scale=particles.scale)
         return match_properties(particles, stracks)

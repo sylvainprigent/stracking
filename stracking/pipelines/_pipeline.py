@@ -6,10 +6,12 @@ from stracking import linkers
 from stracking import properties
 from stracking import features
 from stracking import filters
+from stracking.observers import SObservable
 
 
-class STrackingPipeline:
+class STrackingPipeline(SObservable):
     def __init__(self):
+        super().__init__()
         self.name = ''
         self.date = ''
         self.author = ''
@@ -56,7 +58,6 @@ class STrackingPipeline:
                 parameters = {}
                 if 'parameters' in json_data['steps']['detector']:
                     parameters = json_data['steps']['detector']['parameters']
-                print('load the detector:', json_data['steps']['detector']['name'])
                 self._detector = getattr(detectors, json_data['steps']['detector']['name'])(**parameters)
         if 'linker' in json_data['steps']:
             if 'name' in json_data['steps']['linker']:
@@ -99,25 +100,30 @@ class STrackingPipeline:
         A STracks container of the extracted tracks
 
         """
+        self.notify('Pipeline starts')
+        self.notify('Pipeline detection...')
+        self.progress(0)
         particles = self._detector.run(image)
+
+        self.notify('Pipeline properties...')
+        self.progress(20)
         for prop in self._properties:
             particles = prop.run(particles, image)
-        print('particles:', particles.data)
-        print('particles properties:', particles.properties)
+
+        self.notify('Pipeline linking...')
+        self.progress(40)
         tracks = self._linker.run(particles, image)
+
+        self.notify('Pipeline features...')
+        self.progress(60)
         for feat in self._features:
             tracks = feat.run(tracks)
 
-        print('tracks:', tracks.data)
-        print('tracks properties:', tracks.properties)
-        print('tracks features:', tracks.features)
-        #tracks = match_properties(particles, tracks)
-        #print('tracks properties:', tracks.properties)
-        #print('tracks features:', tracks.features)
-
+        self.notify('Pipeline filters...')
+        self.progress(80)
         for filter_ in self._filters:
             tracks = filter_.run(tracks)
-        print('tracks out:', tracks.data)
-        print('tracks properties out:', tracks.properties)
-        print('tracks features out:', tracks.features)
+
+        self.notify('Pipeline done')
+        self.progress(100)
         return tracks

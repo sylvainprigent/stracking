@@ -52,7 +52,7 @@ class FeatureFilter(STracksFilter):
             if val < self.min_val or val > self.max_val:
                 # remove the particles properties
                 idxs = np.where((stracks.data[:, 0] == track_id))
-                print('filter tracks point indexes=', idxs)
+                #print('filter tracks point indexes=', idxs)
                 for property_ in stracks.properties:
                     stracks.properties[property_] = np.delete(stracks.properties[property_], idxs)
                 # remove from data
