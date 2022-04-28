@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example 2: StarDist (Detection) + Stracking (Tracker) &mdash; STracking 0.0.1 documentation</title>
+  <title>Example 2: StarDist (Detection) + Stracking (Tracker) &mdash; STracking 0.1.9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -117,6 +117,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">SSegDetector</span>
 
 <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
 <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;P31-crop2.tif&quot;</span>
@@ -130,13 +131,9 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
     <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:],</span><span class="n">details</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_instances</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:])</span>
-    <span class="n">pointstemp</span><span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span>
-    <span class="n">X0</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">pointstemp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">pointstemp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X0</span><span class="p">,</span><span class="n">pointstemp</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">points</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">points</span><span class="p">,</span><span class="n">pointstemp</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">points</span><span class="o">=</span><span class="n">pointstemp</span>
+
+<span class="n">sdetector</span> <span class="o">=</span> <span class="n">SSegDetector</span><span class="p">(</span><span class="n">is_mask</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">particles</span> <span class="o">=</span> <span class="n">sdetector</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -165,10 +162,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </section>
 <section id="display-spots-from-stardist">
 <h2>Display spots from StarDist<a class="headerlink" href="#display-spots-from-stardist" title="Permalink to this headline"></a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.containers</span> <span class="kn">import</span> <span class="n">SParticles</span>
-
-<span class="n">particles</span> <span class="o">=</span> <span class="n">SParticles</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">points</span><span class="p">)</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
 <span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -223,7 +217,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, Sylvain Prigent.</p>
+    <p>&#169; Copyright 2020, STracking.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

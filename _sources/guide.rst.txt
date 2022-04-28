@@ -14,7 +14,7 @@ features to select tracks of interest.
 
 Library components
 ------------------
-The **STracking** library is made of one module per step of the pipeline. Plus one module for data containers:
+The **STracking** library is made of one module per step of the pipeline. Plus one module for data containers and on module for pipeline:
 
 * **Containers**: ``SParticles`` and ``STracks`` containers based on ``napari`` points and track layer data structures to store particles and tracks
 * **Detectors**: define a detector interface and implementations of particle detection algorithm for 2D and 3D image sequences
@@ -22,6 +22,7 @@ The **STracking** library is made of one module per step of the pipeline. Plus o
 * **properties**: define an interface and implementations of algorithms to measure properties of particles (intensity...)
 * **feature**: define an interface and implementations of algorithms to measure tracks properties (length, displacement...)
 * **filters**: define an interface and implementations of algorithms to select tracks
+* **pipeline**: Define a class to run a STracking pipeline defined in a json file
 
 Containers
 ~~~~~~~~~~
@@ -41,7 +42,7 @@ A ``SParticles`` object contains a list of particles and their metadata in a 2D+
     scale : tuple of float
         Scale factors for the image data.
 
-A ``STracks`` object contains a list of tracks and there metadata in a 2D+t or 3D+t image. It contains 5 attributes:
+A ``STracks`` object contains a list of tracks and their metadata in a 2D+t or 3D+t image. It contains 5 attributes:
 
     data : array (N, D+1)
         Coordinates for N points in D+1 dimensions. ID,T,(Z),Y,X. The first
@@ -79,6 +80,22 @@ an input and returns detections in a ``SParticles`` object. The parameters of th
     ...
 
 
+To create a new detector developers just need to inherit `SDetector`:
+
+.. code-block:: python
+
+    from stracking.detectors import SDetector
+
+    class MyDetector(SDetector):
+        def __init__(self):
+            super().__init__()
+
+        def run(self, image, scale=None):
+            # Implement the detector here
+            spots_ = ...
+            return SParticles(data=spots_, properties={}, scale=scale)
+
+
 Linkers
 ~~~~~~~
 
@@ -97,6 +114,21 @@ cost function, and a frame gap parameters:
     ...
 
 
+To create a new linker developers just need to inherit `SLinker`:
+
+.. code-block:: python
+
+    from stracking.linkers import SDetector
+
+    class MyLinker(SLinker):
+        def __init__(self, cost=None):
+            super().__init__(cost)
+
+        def run(self, particles, image=None):
+            # Implement the linker here
+            mydata = ...
+            return STracks(data=mydata, properties=None, graph={}, scale=particles.scale)
+
 Properties
 ~~~~~~~~~~~
 
@@ -114,6 +146,22 @@ given radius:
     property_calc.run(particles, image)
     ...
 
+
+To create a new property developers just need to inherit `SProperty`:
+
+.. code-block:: python
+
+    from stracking.properties import SProperty
+
+    class MyProperty(SProperty):
+        def __init__(self, radius):
+            super().__init__()
+
+        def run(self, sparticles, image):
+            # Calculate here some properties and add them to sparticles.properties
+            ...
+            return sparticles
+
 Features
 ~~~~~~~~
 
@@ -130,6 +178,21 @@ the distance a particle moved:
     feature_calc.run(tracks)
     ...
 
+To create a new feature developers just need to inherit `SFeature`:
+
+.. code-block:: python
+
+    from stracking.features import SFeature
+
+    class MyFeature(SFeature):
+        def __init__(self):
+            super().__init__()
+
+        def run(self, stracks, image=None):
+            # Calculate here some features and add them to stracks.features
+            ...
+            return stracks
+
 filters
 ~~~~~~~~
 
@@ -143,6 +206,21 @@ object) as input and return the same tracks object where filtered tracks have be
     filter_calc = FeatureFilter(feature_name='distance', min_val='20', max_val='120')
     filter_calc.run(tracks)
 
+
+To create a new filter developers just need to inherit `SFilter`:
+
+.. code-block:: python
+
+    from stracking.filters import SFilter
+
+    class FeatureFilter(STracksFilter):
+        def __init__(self):
+            super().__init__()
+
+        def run(self, stracks):
+            # Implement here the algorithm to select some tracks
+            new_stracks = ...
+            return new_stracks
 
 
 Read and Write
@@ -158,7 +236,7 @@ object:
     from stracking.io import read_tracks
     tracks = read_tracks('path/to/the/tracks/file.xml'))
 
-You can also call alternatively call the IO class from the dedicated format. Read tracks are then available in the ``tracks``
+You can also alternatively call the IO class from the dedicated format. Read tracks are then available in the ``tracks``
 attribute of the IO object.
 
 .. code-block:: python
@@ -262,3 +340,94 @@ Writing a tracking pipeline with **STracking** is straightforward. You just need
 
     # Save the tracks
     write_tracks('path/to/the/tracks/file.json', tracks)
+
+
+The STracking library also provides a ``STrackingPipeline`` class that allows to run a tracking pipeline from
+a pipeline description file (JSON format):
+
+.. code-block:: json
+
+    {
+      "name": "pipeline1",
+      "author": "Sylvain Prigent",
+      "date": "2022-04-13",
+      "stracking_version": "0.1.8",
+      "steps": {
+        "detector": {
+          "name": "DoGDetector",
+          "parameters": {
+            "min_sigma": 4,
+            "max_sigma": 5,
+            "sigma_ratio": 1.1,
+            "threshold": 0.15,
+            "overlap": 0
+          }
+        },
+        "linker": {
+          "name": "SPLinker",
+          "cost": {
+              "name": "EuclideanCost",
+              "parameters": {}
+          },
+          "parameters": {
+            "gap": 1,
+            "min_track_length": 2
+          }
+        },
+        "properties": [
+          {
+            "name": "IntensityProperty",
+            "parameters": {
+              "radius": 2.5
+            }
+          }
+        ],
+        "features": [
+          {
+            "name": "LengthFeature"
+          },
+          {
+            "name": "DistanceFeature"
+          },
+          {
+            "name": "DisplacementFeature"
+          }
+        ],
+        "filters": [
+          {
+            "name": "FeatureFilter",
+            "parameters": {
+              "feature_name": "distance",
+              "min_val": 20,
+              "max_val": 60
+            }
+          }
+        ]
+      }
+    }
+
+Then, a pipeline can be run with the ``STrackingPipeline`` class
+
+.. code-block:: python
+
+    from stracking.data import fake_tracks1
+    from stracking.io import write_tracks
+    from stracking.pipelines import STrackingPipeline
+    import napari
+
+    # Load data
+    image = fake_tracks1()
+
+    # Run pipeline
+    pipeline = STrackingPipeline()
+    pipeline.load('path/to/the/pipeline.json')
+    tracks = pipeline.run(image)
+
+    # display
+    viewer = napari.Viewer(axis_labels='tyx')
+    viewer.add_image(image, contrast_limits=[0, 300])
+    viewer.add_tracks(tracks.data, name='Pipeline Tracks',colormap="hsv")
+    napari.run()
+
+    # save
+    write_tracks('pipeline_tracks.csv', tracks, format_='csv')

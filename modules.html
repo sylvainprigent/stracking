@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Available tools &mdash; STracking 0.0.1 documentation</title>
+  <title>Available tools &mdash; STracking 0.1.9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -49,6 +49,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-stracking.detectors">Detectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-stracking.properties">Properties</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-stracking.linkers">Linkers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stracking.features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stracking.filters">Filters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#io">IO</a></li>
 </ul>
 </li>
@@ -350,6 +352,39 @@ interpolation is used.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="stracking.detectors.SDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.detectors.</span></span><span class="sig-name descname"><span class="pre">SDetector</span></span><a class="headerlink" href="#stracking.detectors.SDetector" title="Permalink to this definition"></a></dt>
+<dd><p>Interface for a particle detector</p>
+<p>The parameters must be set to the constructor and the image data to the
+run method
+.. rubric:: Example</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">my_detector</span> <span class="pre">=</span> <span class="pre">MyParticleDetector(threshold=12.0)</span>
+<span class="pre">particles</span> <span class="pre">=</span> <span class="pre">my_detector.run(image)</span>
+<span class="pre">`</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.detectors.SDetector.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.SDetector.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the detection on a ND image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p></li>
+<li><p><strong>scale</strong> (<em>tuple</em><em> or </em><em>list</em>) – scale of the image in each dimension</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="stracking.detectors.SSegDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.detectors.</span></span><span class="sig-name descname"><span class="pre">SSegDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.detectors.SSegDetector" title="Permalink to this definition"></a></dt>
 <dd><p>Detections from segmentation image</p>
@@ -416,6 +451,33 @@ std_intensity and the radius parameter</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.properties.SProperty">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.properties.</span></span><span class="sig-name descname"><span class="pre">SProperty</span></span><a class="headerlink" href="#stracking.properties.SProperty" title="Permalink to this definition"></a></dt>
+<dd><p>Interface to implement a property measure</p>
+<p>Measure a property for each particle in a SParticles</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.properties.SProperty.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparticles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.properties.SProperty.run" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the feature</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sparticles</strong> (<a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles"><em>SParticles</em></a>) – Particles list</p></li>
+<li><p><strong>image</strong> (<em>array</em>) – 2D+t or 3D+t image array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>sparticles</strong> – input particles with the calculated feature added to the properties</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-stracking.linkers">
 <span id="linkers"></span><h2>Linkers<a class="headerlink" href="#module-stracking.linkers" title="Permalink to this headline"></a></h2>
@@ -447,6 +509,114 @@ std_intensity and the radius parameter</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="stracking.linkers.SLinker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">SLinker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SLinker" title="Permalink to this definition"></a></dt>
+<dd><p>Interface for a particle tracker</p>
+<p>The parameters must be set to the constructor and the image data and
+particles to the run method
+.. rubric:: Example</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">euclidean_cost</span> <span class="pre">=</span> <span class="pre">EuclideanCost(max_move=5.0)</span>
+<span class="pre">my_tracker</span> <span class="pre">=</span> <span class="pre">MyParticleTracker(cost=euclidean_cost,</span> <span class="pre">gap=1)</span>
+<span class="pre">tracks</span> <span class="pre">=</span> <span class="pre">my_detector.run(image,</span> <span class="pre">particles)</span>
+<span class="pre">`</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cost</strong> (<a class="reference internal" href="#stracking.linkers.SLinkerCost" title="stracking.linkers.SLinkerCost"><em>SLinkerCost</em></a>) – Object defining the linker cost</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.linkers.SLinker.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SLinker.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the tracker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p></li>
+<li><p><strong>particles</strong> (<a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles"><em>SParticles</em></a>) – List of particles for each frames</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.linkers.SLinkerCost">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">SLinkerCost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SLinkerCost" title="Permalink to this definition"></a></dt>
+<dd><p>Interface for a linker cost</p>
+<p>This calculate the cost between two particles</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.linkers.SLinkerCost.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SLinkerCost.run" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the cost of linking particle1 and particle2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particle1</strong> (<em>array</em>) – First particle data (t, Y, X) for 2D, (t, Z, Y, X) for 3D</p></li>
+<li><p><strong>particle2</strong> (<em>array</em>) – Second particle data (t, Y, X) for 2D, (t, Z, Y, X) for 3D</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cost</strong> – Link cost</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.linkers.SNNLinker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">SNNLinker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_track_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SNNLinker" title="Permalink to this definition"></a></dt>
+<dd><p>Linker using nearest neighbor algorithm</p>
+<p>Find the trajectories by linking each detection to it nearest neighbor</p>
+<p>This tracker cannot handle split or merge events</p>
+<p class="rubric">Example</p>
+<p>particles = SParticles(…)
+euclidean_cost = EuclideanCost(max_move=5.0)
+my_tracker = SNNLinker(cost=euclidean_cost, gap=1)
+tracks = my_tracker.run(particles)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cost</strong> (<a class="reference internal" href="#stracking.linkers.SLinkerCost" title="stracking.linkers.SLinkerCost"><em>SLinkerCost</em></a>) – Object defining the linker cost</p></li>
+<li><p><strong>gap</strong> (<em>int</em>) – Gap (in frame number) of possible missing detections</p></li>
+<li><p><strong>min_track_length</strong> (<em>int</em>) – Minimum number of connections in a selected track</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.linkers.SNNLinker.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SNNLinker.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the tracker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – time frames to analyse</p></li>
+<li><p><strong>particles</strong> (<a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles"><em>SParticles</em></a>) – List of particles for each frames</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detections</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.SParticles" title="stracking.containers.SParticles">SParticles</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="stracking.linkers.SPLinker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.linkers.</span></span><span class="sig-name descname"><span class="pre">SPLinker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_track_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.linkers.SPLinker" title="Permalink to this definition"></a></dt>
 <dd><p>Linker using Shortest Path algorithm</p>
@@ -461,7 +631,7 @@ tracks = my_tracker.run(particles)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cost</strong> (<em>SLinkerCost</em>) – Object defining the linker cost</p></li>
+<li><p><strong>cost</strong> (<a class="reference internal" href="#stracking.linkers.SLinkerCost" title="stracking.linkers.SLinkerCost"><em>SLinkerCost</em></a>) – Object defining the linker cost</p></li>
 <li><p><strong>gap</strong> (<em>int</em>) – Gap (in frame number) of possible missing detections</p></li>
 <li><p><strong>min_track_length</strong> (<em>int</em>) – Minimum number of connections in a selected track</p></li>
 </ul>
@@ -490,6 +660,183 @@ tracks = my_tracker.run(particles)</p>
 </dd></dl>
 
 </section>
+<section id="module-stracking.features">
+<span id="features"></span><h2>Features<a class="headerlink" href="#module-stracking.features" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.features.DisplacementFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.features.</span></span><span class="sig-name descname"><span class="pre">DisplacementFeature</span></span><a class="headerlink" href="#stracking.features.DisplacementFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate track length features.</p>
+<p>Length is defined here as the number of point in a track</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.features.DisplacementFeature.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.features.DisplacementFeature.run" title="Permalink to this definition"></a></dt>
+<dd><p>Measure a track property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Track data container</p></li>
+<li><p><strong>image</strong> (<em>ndarray</em>) – optional image data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – tracks with new feature</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.features.DistanceFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.features.</span></span><span class="sig-name descname"><span class="pre">DistanceFeature</span></span><a class="headerlink" href="#stracking.features.DistanceFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate track length features.</p>
+<p>Length is defined here as the number of point in a track</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.features.DistanceFeature.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.features.DistanceFeature.run" title="Permalink to this definition"></a></dt>
+<dd><p>Measure a track property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Track data container</p></li>
+<li><p><strong>image</strong> (<em>ndarray</em>) – optional image data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – tracks with new feature</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.features.LengthFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.features.</span></span><span class="sig-name descname"><span class="pre">LengthFeature</span></span><a class="headerlink" href="#stracking.features.LengthFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate track length features.</p>
+<p>Length is defined here as the number of point in a track</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.features.LengthFeature.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.features.LengthFeature.run" title="Permalink to this definition"></a></dt>
+<dd><p>Measure a track property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Track data container</p></li>
+<li><p><strong>image</strong> (<em>ndarray</em>) – optional image data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – tracks with new feature</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.features.SFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.features.</span></span><span class="sig-name descname"><span class="pre">SFeature</span></span><a class="headerlink" href="#stracking.features.SFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Interface for a particle feature measurement</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – tracks to analyse</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.features.SFeature.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.features.SFeature.run" title="Permalink to this definition"></a></dt>
+<dd><p>Measure a track property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Track data container</p></li>
+<li><p><strong>image</strong> (<em>ndarray</em>) – optional image data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – tracks with new feature</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-stracking.filters">
+<span id="filters"></span><h2>Filters<a class="headerlink" href="#module-stracking.filters" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.filters.FeatureFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.filters.</span></span><span class="sig-name descname"><span class="pre">FeatureFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.filters.FeatureFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Select trajectories based on feature</p>
+<p>This filter select trajectories where a given feature have a value between
+a given min and max value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_name</strong> (<em>str</em>) – Name of the feature to use</p></li>
+<li><p><strong>min_val</strong> (<em>float</em>) – Minimum value of the feature to keep the track</p></li>
+<li><p><strong>max_val</strong> (<em>float</em>) – Maximum value of the feature to keep the track</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.filters.FeatureFilter.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.filters.FeatureFilter.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the filtering</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Tracks to filter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – Filtered tracks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stracking.filters.STracksFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stracking.filters.</span></span><span class="sig-name descname"><span class="pre">STracksFilter</span></span><a class="headerlink" href="#stracking.filters.STracksFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Interface for a tracks filter</p>
+<p>A filter can select tracks based on properties of features
+Must implement the filter method</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stracking.filters.STracksFilter.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stracks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stracking.filters.STracksFilter.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the filtering</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stracks</strong> (<a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks"><em>STracks</em></a>) – Tracks to filter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stracks</strong> – Filtered tracks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stracking.containers.STracks" title="stracking.containers.STracks">STracks</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="io">
 <h2>IO<a class="headerlink" href="#io" title="Permalink to this headline"></a></h2>
 </section>
@@ -505,7 +852,7 @@ tracks = my_tracker.run(particles)</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, Sylvain Prigent.</p>
+    <p>&#169; Copyright 2020, STracking.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
