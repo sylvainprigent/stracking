@@ -1,5 +1,5 @@
 Example 1: Stracking workflow
-==========================
+=============================
 
 This example shows how to detect particles in 3D+t image using the LoG
 detector

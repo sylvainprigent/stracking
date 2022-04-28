@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'STracking'
-copyright = '2020, Sylvain Prigent'
-author = 'Sylvain Prigent'
+copyright = '2020, STracking'
+author = 'Sylvain Prigent, Cesar-Augusto Valades Cruz'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '0.1.9'
 
 
 # -- General configuration ---------------------------------------------------

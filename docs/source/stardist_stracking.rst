@@ -1,5 +1,5 @@
 Example 2: StarDist (Detection) + Stracking (Tracker)
-==========================================
+=====================================================
 
 This example shows a combination of StarDist Detection and Stracking
 (Tracker)
@@ -43,6 +43,7 @@ StarDist: Prediction and detection
     import matplotlib.pyplot as plt
     from tifffile import imread
     import numpy as np
+    from stracking.detectors import SSegDetector
     
     folder=""
     filename="P31-crop2.tif"
@@ -56,14 +57,10 @@ StarDist: Prediction and detection
     
     for i in range(img.shape[0]):
         labels[i,:,:],details = model.predict_instances(img[i,:,:])
-        pointstemp= details['points']
-        X0 = i*np.ones((pointstemp.shape[0],1))
-        pointstemp = np.hstack((X0,pointstemp))
-        if i>0:        
-            points=np.concatenate((points,pointstemp),axis=0)
-        else:
-            points=pointstemp
-                      
+
+    sdetector = SSegDetector(is_mask=False)
+    particles = sdetector.run(labels)
+
 
 Create an empty napari viewer
 -----------------------------
@@ -99,9 +96,6 @@ Display spots from StarDist
 
 .. code-block:: python3
 
-    from stracking.containers import SParticles
-    
-    particles = SParticles(data=points)
     viewer.add_points(particles.data, size=5, blending='additive')
     nbscreenshot(viewer)
 

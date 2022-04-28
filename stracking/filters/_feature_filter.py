@@ -70,8 +70,6 @@ class FeatureFilter(STracksFilter):
                     new_feature = feature.copy()
                     new_feature.pop(track_id)
                     stracks.features[key] = new_feature
-
-
         self.notify('done')
         self.progress(100)
         return stracks

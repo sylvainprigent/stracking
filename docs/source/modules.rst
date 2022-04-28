@@ -25,6 +25,18 @@ Linkers
 .. automodule:: stracking.linkers
     :members:
 
+Features
+--------
+
+.. automodule:: stracking.features
+    :members:
+
+Filters
+-------
+
+.. automodule:: stracking.filters
+    :members:
+
 IO
 --
 
