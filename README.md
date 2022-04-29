@@ -12,7 +12,7 @@ spots tracking application in 2D+t and 3D+t images.
 
 The `STracking` development version is tested on *Windows 10*, *MacOS* and *Linux* operating systems. The developmental version of the package has been tested on the following systems:
 
-- Linux: 
+- Linux: 20.04.4 
 - Mac OSX: Mac OS Catalina 10.15.7    
 - Windows: 10 
 
