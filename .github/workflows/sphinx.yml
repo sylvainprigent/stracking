@@ -32,7 +32,7 @@ jobs:
       # to my conf.py extensions list. that fixes the broken uploads
       - name: Building documentation
         run: |
-          pip install cython numpy scikit-image scipy
+          pip install cython numpy pandas scikit-image scipy
           pip install sphinx sphinx_rtd_theme
           cd docs
           make html
