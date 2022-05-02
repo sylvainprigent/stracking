@@ -6,7 +6,7 @@ from stracking.containers import STracks
 
 
 class ICYIO(STrackIO):
-    """Read a TrackMate model
+    """Read a ICY model
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 # Reader interface and service
 
 class STrackIO:
-    """Interface for a tracks reader/write
+    """Interface for a tracks reader/writer
 
     Parameters
     ----------
