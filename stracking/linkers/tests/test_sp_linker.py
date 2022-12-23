@@ -5,7 +5,7 @@ from stracking.containers import SParticles
 from stracking.linkers import EuclideanCost, SPLinker
 
 
-def test_sp_linker():
+def test_sp_linker(graph_tool = False):
     """An example of how you might test your plugin."""
 
     detections = np.array([[0., 53., 12.],
@@ -48,9 +48,13 @@ def test_sp_linker():
                        [2., 4., 13., 71.]]
 
     np.testing.assert_almost_equal(expected_output, tracks.data, decimal=1)
+    if graph_tool:
+        euclidean_cost = EuclideanCost(max_cost=3000)
+        my_tracker = SPLinker(cost=euclidean_cost, gap=1)
+        tracks = my_tracker.run(particles, graph_tool=True)
+        np.testing.assert_almost_equal(expected_output, tracks.data, decimal=1)
 
-
-def test_sp_linker_gap():
+def test_sp_linker_gap(graph_tool = False):
     """An example of how you might test your plugin."""
 
     detections = np.array([[0, 20, 20],
@@ -92,3 +96,9 @@ def test_sp_linker_gap():
                                )
 
     np.testing.assert_almost_equal(expected_output, tracks.data, decimal=1)
+
+    if graph_tool:
+        euclidean_cost = EuclideanCost(max_cost=3000)
+        my_tracker = SPLinker(cost=euclidean_cost, gap=2)
+        tracks = my_tracker.run(particles)
+        np.testing.assert_almost_equal(expected_output, tracks.data, decimal=1)
