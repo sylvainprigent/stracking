@@ -7,6 +7,10 @@ from ._linker import SLinker, calculate_num_obj_per_frame
 from .utils import match_properties
 from stracking.containers import STracks
 
+try:
+    import graph_tool.all as gt
+except:
+    gt = None
 
 class SPLinker(SLinker):
     """Linker using Shortest Path algorithm
@@ -44,9 +48,12 @@ class SPLinker(SLinker):
         self.tracks_ = None
         self.track_count_ = -1
         self._dim = 0
-
-    def run(self, particles, image=None):
+    
+    def run(self, particles, image=None, graph_tool=False):
         self._detections = particles.data
+        if graph_tool:
+            assert gt, 'graph-tool is not install, '\
+                'see https://git.skewed.de/count0/graph-tool/-/wikis/installation-instructions'
 
         self.notify('processing')
         self.progress(0)
@@ -104,6 +111,8 @@ class SPLinker(SLinker):
                                     int((cost_value / self.cost.max_cost - 1.0)
                                         * self.int_convert_coef)
 
+        # trasfer graph to graph_tool
+        graph = self.get_graph_tool(graph) if graph_tool else graph
         # 2- Optimize
         self.progress(50)
         self.notify('processing: shortest path')
@@ -111,13 +120,10 @@ class SPLinker(SLinker):
         while 1:
             #print('extract track...')
             # 2.1- Short path algorithm
-            dist_matrix, predecessors = bellman_ford(csgraph=graph,
-                                                     directed=True,
-                                                     indices=0,
-                                                     return_predecessors=True)
+            predecessors = self.run_bellman_ford(graph, graph_tool)
 
             # 2.2- Make track from predecessors and update graph
-            track = self._path_to_track(graph, predecessors)
+            track = self._path_to_track(graph, predecessors, graph_tool)
 
             if track.shape[0] <= self.min_track_length:
                 break
@@ -130,8 +136,36 @@ class SPLinker(SLinker):
         stracks = STracks(data=self.tracks_, properties=None,
                           graph={}, features={}, scale=particles.scale)
         return match_properties(particles, stracks)
+    
+    def get_graph_tool(self, graph):
 
-    def _path_to_track(self, graph, predecessors):
+        vals = []
+        couples = np.transpose(graph.nonzero())
+        for i in couples:
+            vals.append(graph[i[0],i[1]])
+            
+        graph = gt.Graph()
+        eweight = graph.new_ep("double")
+        self.eweight = eweight
+        graph.add_edge_list(np.hstack([couples,np.array([vals]).T]), eprops=[self.eweight])
+        return graph
+
+
+    def run_bellman_ford(self, graph, graph_tool):
+        if graph_tool:
+            _, dist, predecessors =  gt.bellman_ford_search(graph,
+                                                graph.vertex(0),self.eweight)
+            predecessors =  np.array(predecessors.get_array())
+            predecessors[dist.get_array()>10**205] = -9999
+
+        else:
+            _, predecessors = bellman_ford(csgraph=graph,
+                                            directed=True,
+                                            indices=0,
+                                            return_predecessors=True)
+        return predecessors
+
+    def _path_to_track(self, graph, predecessors, graph_tool):
         """Transform a predecessor path to a Track
 
         Parameters
@@ -158,8 +192,11 @@ class SPLinker(SLinker):
             if pred > 0:
                 #print("add predecessor...")
                 # remove the track nodes in the graph
-                graph[pred, :] = 0
-                graph[:, pred] = 0
+                if graph_tool:
+                    graph.clear_vertex(pred)
+                else:
+                    graph[pred, :] = 0
+                    graph[:, pred] = 0
 
                 # create the track data
                 object_array = self._detections[pred - 1, :]
