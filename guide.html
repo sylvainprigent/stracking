@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide &mdash; STracking 0.1.9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -14,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> STracking
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            STracking
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,8 +82,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Guide</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Guide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,7 +94,7 @@
            <div itemprop="articleBody">
              
   <section id="guide">
-<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline"></a></h1>
+<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this heading"></a></h1>
 <p><strong>STracking</strong> is a python framework to develop particles tracking pipeline. This library has been developed to track
 intra-cellular object in microscopy 2D+t and 3D+t images, but can be use for any spots tracking application in
 2D+t and 3D+t images.</p>
@@ -96,7 +104,7 @@ form the tracks. Then we calculate the <strong>properties</strong> of the partic
 tracks (length, distance…) to analyse them. A final step is the tracks <strong>filtering</strong> that uses the properties and
 features to select tracks of interest.</p>
 <section id="library-components">
-<h2>Library components<a class="headerlink" href="#library-components" title="Permalink to this headline"></a></h2>
+<h2>Library components<a class="headerlink" href="#library-components" title="Permalink to this heading"></a></h2>
 <p>The <strong>STracking</strong> library is made of one module per step of the pipeline. Plus one module for data containers and on module for pipeline:</p>
 <ul class="simple">
 <li><p><strong>Containers</strong>: <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">STracks</span></code> containers based on <code class="docutils literal notranslate"><span class="pre">napari</span></code> points and track layer data structures to store particles and tracks</p></li>
@@ -108,7 +116,7 @@ features to select tracks of interest.</p>
 <li><p><strong>pipeline</strong>: Define a class to run a STracking pipeline defined in a json file</p></li>
 </ul>
 <section id="containers">
-<h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline"></a></h3>
+<h3>Containers<a class="headerlink" href="#containers" title="Permalink to this heading"></a></h3>
 <p>The containers module has two classes <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">STracks</span></code> to facilitate the management of the <em>particles</em> and <em>tracks</em>
 data and metadata. The containers have been designed to be compatible with the napari layers data structures.</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object contains a list of particles and their metadata in a 2D+t or 3D+t image. It contains 3 attributes:</p>
@@ -151,7 +159,7 @@ trackID=feature. Ex: features[‘length’][12]=25.2</p>
 </div></blockquote>
 </section>
 <section id="detectors">
-<h3>Detectors<a class="headerlink" href="#detectors" title="Permalink to this headline"></a></h3>
+<h3>Detectors<a class="headerlink" href="#detectors" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SDetector</span></code> are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes a numpy array ( 2D+t or 3D+t image) as
 an input and returns detections in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> object. The parameters of the detector have to be passed to it constructor.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">DoGDetector</span>
@@ -176,7 +184,7 @@ an input and returns detections in a <code class="docutils literal notranslate">
 </div>
 </section>
 <section id="linkers">
-<h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this headline"></a></h3>
+<h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SLinker</span></code> are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the detections (in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code>
 object) and optionally a numpy array (the 2D+t or 3D+t image), and return the calculated tracks in a <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object.
 The parameters of a linker have to be passed in the constructor. For example, the <code class="docutils literal notranslate"><span class="pre">SPLinker</span></code> (Shortest Path) linker need a
@@ -204,7 +212,7 @@ cost function, and a frame gap parameters:</p>
 </div>
 </section>
 <section id="properties">
-<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline"></a></h3>
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SProperty</span></code> based objects are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the detections (in a <code class="docutils literal notranslate"><span class="pre">SParticles</span></code>
 object) and a numpy array (the 2D+t or 3D+t image), and returns the input <code class="docutils literal notranslate"><span class="pre">SParticles</span></code> where the calculated properties have been added
 to the <code class="docutils literal notranslate"><span class="pre">SParticles.properties</span></code> dictionary. All the <code class="docutils literal notranslate"><span class="pre">SProperty</span></code> parameters have to be send to the constructor. Here is an
@@ -232,7 +240,7 @@ given radius:</p>
 </div>
 </section>
 <section id="features">
-<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h3>
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SFeature</span></code> based objects are objects with the same interface. They have a <code class="docutils literal notranslate"><span class="pre">run</span></code> method that takes the tracks (in a <code class="docutils literal notranslate"><span class="pre">STRacks</span></code>
 object) and optionally a numpy array (the 2D+t or 3D+t image), and returns the input <code class="docutils literal notranslate"><span class="pre">STracks</span></code> object where the calculated
 features have been added to the <code class="docutils literal notranslate"><span class="pre">STracks.features</span></code> dictionary. Here is an example of the <code class="docutils literal notranslate"><span class="pre">DistanceFeature</span></code> that calculate
@@ -259,7 +267,7 @@ the distance a particle moved:</p>
 </div>
 </section>
 <section id="filters">
-<h3>filters<a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
+<h3>filters<a class="headerlink" href="#filters" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">SFilter</span></code> based objects are objects with the same interface. The have a <code class="docutils literal notranslate"><span class="pre">Run</span></code> method that takes the tracks (in a <code class="docutils literal notranslate"><span class="pre">STRacks</span></code>
 object) as input and return the same tracks object where filtered tracks have been removed:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.filters</span> <span class="kn">import</span> <span class="n">FeatureFilter</span>
@@ -284,7 +292,7 @@ object) as input and return the same tracks object where filtered tracks have be
 </section>
 </section>
 <section id="read-and-write">
-<h2>Read and Write<a class="headerlink" href="#read-and-write" title="Permalink to this headline"></a></h2>
+<h2>Read and Write<a class="headerlink" href="#read-and-write" title="Permalink to this heading"></a></h2>
 <p>The <strong>STracking</strong> library provides an extra module called <strong>io</strong>. It allows to read tracks data from many formats (JSON, CSV,
 Icy xml, ISBI xml, TrackMate xml…) and write the tracks in JSON format.
 To read a file, you can use the convenient method <code class="docutils literal notranslate"><span class="pre">read_tracks</span></code> that takes the path of an input file and return a <code class="docutils literal notranslate"><span class="pre">STracks</span></code>
@@ -337,7 +345,7 @@ write_particles(‘path/to/the/tracks/file.csv’, particles)
 </div>
 </section>
 <section id="pipeline">
-<h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this headline"></a></h2>
+<h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this heading"></a></h2>
 <p>Writing a tracking pipeline with <strong>STracking</strong> is straightforward. You just need to call the different modules in a sequence:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.data</span> <span class="kn">import</span> <span class="n">fake_tracks1</span>
 <span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">DoGDetector</span>
@@ -387,64 +395,64 @@ write_particles(‘path/to/the/tracks/file.csv’, particles)
 </div>
 <p>The STracking library also provides a <code class="docutils literal notranslate"><span class="pre">STrackingPipeline</span></code> class that allows to run a tracking pipeline from
 a pipeline description file (JSON format):</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pipeline1&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sylvain Prigent&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-04-13&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;stracking_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.8&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;detector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DoGDetector&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;min_sigma&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;max_sigma&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;sigma_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;linker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SPLinker&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EuclideanCost&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;gap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;min_track_length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;IntensityProperty&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LengthFeature&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DistanceFeature&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DisplacementFeature&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;filters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureFilter&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;feature_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;distance&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;min_val&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">          </span><span class="nt">&quot;max_val&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pipeline1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sylvain Prigent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-04-13&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;stracking_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.8&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DoGDetector&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;min_sigma&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;max_sigma&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;sigma_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;linker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SPLinker&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;cost&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EuclideanCost&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;gap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;min_track_length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;IntensityProperty&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LengthFeature&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DistanceFeature&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DisplacementFeature&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;filters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureFilter&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;feature_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;distance&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;min_val&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;max_val&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Then, a pipeline can be run with the <code class="docutils literal notranslate"><span class="pre">STrackingPipeline</span></code> class</p>

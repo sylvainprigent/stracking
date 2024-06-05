@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Example 1: Stracking workflow &mdash; STracking 0.1.9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -14,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> STracking
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            STracking
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -83,8 +91,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Example 1: Stracking workflow</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example 1: Stracking workflow</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/stracking.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -95,11 +103,11 @@
            <div itemprop="articleBody">
              
   <section id="example-1-stracking-workflow">
-<h1>Example 1: Stracking workflow<a class="headerlink" href="#example-1-stracking-workflow" title="Permalink to this headline"></a></h1>
+<h1>Example 1: Stracking workflow<a class="headerlink" href="#example-1-stracking-workflow" title="Permalink to this heading"></a></h1>
 <p>This example shows how to detect particles in 3D+t image using the LoG
 detector</p>
 <section id="load-data">
-<h2>Load data<a class="headerlink" href="#load-data" title="Permalink to this headline"></a></h2>
+<h2>Load data<a class="headerlink" href="#load-data" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking</span> <span class="kn">import</span> <span class="n">data</span>
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
 
@@ -113,7 +121,7 @@ detector</p>
 </div>
 </section>
 <section id="create-an-empty-napari-viewer">
-<h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this headline"></a></h2>
+<h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">gui</span> <span class="n">qt</span>
 
 <span class="kn">import</span> <span class="nn">napari</span>
@@ -123,7 +131,7 @@ detector</p>
 </div>
 </section>
 <section id="display-volumetric-timeseries">
-<h2>Display volumetric timeseries<a class="headerlink" href="#display-volumetric-timeseries" title="Permalink to this headline"></a></h2>
+<h2>Display volumetric timeseries<a class="headerlink" href="#display-volumetric-timeseries" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">PKMRimg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PKMR&#39;</span><span class="p">,</span> <span class="n">multiscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="mf">4.3</span><span class="p">,</span><span class="mf">0.316</span><span class="p">,</span><span class="mf">0.104</span><span class="p">,</span><span class="mf">0.104</span><span class="p">],</span>
             <span class="n">contrast_limits</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">600</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;magenta&#39;</span><span class="p">,</span><span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">);</span>
 
@@ -139,7 +147,7 @@ detector</p>
 <a class="reference internal image-reference" href="_images/output_Example1_1.png"><img alt="_images/output_Example1_1.png" src="_images/output_Example1_1.png" style="width: 600px;" /></a>
 </section>
 <section id="log-3d-t-detection">
-<h2>LoG 3D+t detection<a class="headerlink" href="#log-3d-t-detection" title="Permalink to this headline"></a></h2>
+<h2>LoG 3D+t detection<a class="headerlink" href="#log-3d-t-detection" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.detectors</span> <span class="kn">import</span> <span class="n">LoGDetector</span>
 
 <span class="n">detector</span> <span class="o">=</span> <span class="n">LoGDetector</span><span class="p">(</span><span class="n">min_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">num_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
@@ -147,7 +155,7 @@ detector</p>
 </pre></div>
 </div>
 <section id="display-spots">
-<h3>Display spots<a class="headerlink" href="#display-spots" title="Permalink to this headline"></a></h3>
+<h3>Display spots<a class="headerlink" href="#display-spots" title="Permalink to this heading"></a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;spherical&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="mf">4.3</span><span class="p">,</span><span class="mf">0.316</span><span class="p">,</span><span class="mf">0.104</span><span class="p">,</span><span class="mf">0.104</span><span class="p">],</span><span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
 <span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
@@ -156,7 +164,7 @@ detector</p>
 </section>
 </section>
 <section id="spots-properties">
-<h2>Spots properties<a class="headerlink" href="#spots-properties" title="Permalink to this headline"></a></h2>
+<h2>Spots properties<a class="headerlink" href="#spots-properties" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.properties</span> <span class="kn">import</span> <span class="n">IntensityProperty</span>
 
 <span class="n">property_calc</span> <span class="o">=</span> <span class="n">IntensityProperty</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
@@ -169,7 +177,7 @@ detector</p>
 </pre></div>
 </div>
 <section id="spots-statistics">
-<h3>Spots statistics<a class="headerlink" href="#spots-statistics" title="Permalink to this headline"></a></h3>
+<h3>Spots statistics<a class="headerlink" href="#spots-statistics" title="Permalink to this heading"></a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
@@ -195,7 +203,7 @@ detector</p>
 </section>
 </section>
 <section id="tracker">
-<h2>Tracker<a class="headerlink" href="#tracker" title="Permalink to this headline"></a></h2>
+<h2>Tracker<a class="headerlink" href="#tracker" title="Permalink to this heading"></a></h2>
 <p>Shortest path tracking with euclidean cost</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.linkers</span> <span class="kn">import</span> <span class="n">SPLinker</span><span class="p">,</span> <span class="n">EuclideanCost</span>
 
@@ -221,7 +229,7 @@ detector</p>
 </pre></div>
 </div>
 <section id="display-tracks">
-<h3>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this headline"></a></h3>
+<h3>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this heading"></a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tracks&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="mf">4.3</span><span class="p">,</span><span class="mf">0.316</span><span class="p">,</span><span class="mf">0.104</span><span class="p">,</span><span class="mf">0.104</span><span class="p">])</span>
 <span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
@@ -230,7 +238,7 @@ detector</p>
 </section>
 </section>
 <section id="features-tracking">
-<h2>Features - tracking<a class="headerlink" href="#features-tracking" title="Permalink to this headline"></a></h2>
+<h2>Features - tracking<a class="headerlink" href="#features-tracking" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.features</span> <span class="kn">import</span> <span class="p">(</span><span class="n">LengthFeature</span><span class="p">,</span> <span class="n">DistanceFeature</span><span class="p">,</span>
                                 <span class="n">DisplacementFeature</span><span class="p">)</span>
 
@@ -250,7 +258,7 @@ detector</p>
 </pre></div>
 </div>
 <section id="display-tracks-properties">
-<h3>Display tracks properties<a class="headerlink" href="#display-tracks-properties" title="Permalink to this headline"></a></h3>
+<h3>Display tracks properties<a class="headerlink" href="#display-tracks-properties" title="Permalink to this heading"></a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">displacement</span><span class="o">=</span><span class="n">tracks</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;displacement&#39;</span><span class="p">];</span>
 <span class="n">distance</span><span class="o">=</span><span class="n">tracks</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">];</span>
 <span class="n">length</span><span class="o">=</span><span class="n">tracks</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;length&#39;</span><span class="p">];</span>
@@ -288,7 +296,7 @@ detector</p>
 </section>
 </section>
 <section id="id1">
-<h2>Features tracking<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<h2>Features tracking<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.filters</span> <span class="kn">import</span> <span class="n">FeatureFilter</span>
 
 <span class="n">f_filter</span> <span class="o">=</span> <span class="n">FeatureFilter</span><span class="p">(</span><span class="n">feature_name</span><span class="o">=</span><span class="s1">&#39;length&#39;</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>

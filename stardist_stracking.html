@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Example 2: StarDist (Detection) + Stracking (Tracker) &mdash; STracking 0.1.9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -14,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> STracking
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            STracking
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -70,8 +78,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Example 2: StarDist (Detection) + Stracking (Tracker)</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example 2: StarDist (Detection) + Stracking (Tracker)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/stardist_stracking.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,11 +90,11 @@
            <div itemprop="articleBody">
              
   <section id="example-2-stardist-detection-stracking-tracker">
-<h1>Example 2: StarDist (Detection) + Stracking (Tracker)<a class="headerlink" href="#example-2-stardist-detection-stracking-tracker" title="Permalink to this headline"></a></h1>
+<h1>Example 2: StarDist (Detection) + Stracking (Tracker)<a class="headerlink" href="#example-2-stardist-detection-stracking-tracker" title="Permalink to this heading"></a></h1>
 <p>This example shows a combination of StarDist Detection and Stracking
 (Tracker)</p>
 <section id="load-trained-mode">
-<h2>Load trained mode<a class="headerlink" href="#load-trained-mode" title="Permalink to this headline"></a></h2>
+<h2>Load trained mode<a class="headerlink" href="#load-trained-mode" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stardist.models</span> <span class="kn">import</span> <span class="n">StarDist2D</span>
 
 <span class="c1"># prints a list of available models</span>
@@ -112,7 +120,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </div>
 </section>
 <section id="stardist-prediction-and-detection">
-<h2>StarDist: Prediction and detection<a class="headerlink" href="#stardist-prediction-and-detection" title="Permalink to this headline"></a></h2>
+<h2>StarDist: Prediction and detection<a class="headerlink" href="#stardist-prediction-and-detection" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">csbdeep.utils</span> <span class="kn">import</span> <span class="n">normalize</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
@@ -138,7 +146,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </div>
 </section>
 <section id="create-an-empty-napari-viewer">
-<h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this headline"></a></h2>
+<h2>Create an empty napari viewer<a class="headerlink" href="#create-an-empty-napari-viewer" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">gui</span> <span class="n">qt</span>
 
 <span class="kn">import</span> <span class="nn">napari</span>
@@ -148,7 +156,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </div>
 </section>
 <section id="display-input-and-stardist-prediction">
-<h2>Display Input and StarDist Prediction<a class="headerlink" href="#display-input-and-stardist-prediction" title="Permalink to this headline"></a></h2>
+<h2>Display Input and StarDist Prediction<a class="headerlink" href="#display-input-and-stardist-prediction" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span> <span class="n">multiscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">contrast_limits</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">);</span>
 
@@ -161,7 +169,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 <a class="reference internal image-reference" href="_images/output_Example2_1.png"><img alt="_images/output_Example2_1.png" src="_images/output_Example2_1.png" style="width: 600px;" /></a>
 </section>
 <section id="display-spots-from-stardist">
-<h2>Display spots from StarDist<a class="headerlink" href="#display-spots-from-stardist" title="Permalink to this headline"></a></h2>
+<h2>Display spots from StarDist<a class="headerlink" href="#display-spots-from-stardist" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
 <span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
@@ -169,7 +177,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 <a class="reference internal image-reference" href="_images/output_Example2_2.png"><img alt="_images/output_Example2_2.png" src="_images/output_Example2_2.png" style="width: 600px;" /></a>
 </section>
 <section id="linker">
-<h2>Linker<a class="headerlink" href="#linker" title="Permalink to this headline"></a></h2>
+<h2>Linker<a class="headerlink" href="#linker" title="Permalink to this heading"></a></h2>
 <p>Shortest path tracking with euclidean cost</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stracking.linkers</span> <span class="kn">import</span> <span class="n">SPLinker</span><span class="p">,</span> <span class="n">EuclideanCost</span>
 
@@ -197,7 +205,7 @@ Using default values: prob_thresh=0.479071, nms_thresh=0.3.
 </div>
 </section>
 <section id="display-tracks">
-<h2>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this headline"></a></h2>
+<h2>Display tracks<a class="headerlink" href="#display-tracks" title="Permalink to this heading"></a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">add_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tracks&#39;</span><span class="p">)</span>
 <span class="n">nbscreenshot</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
 </pre></div>
