@@ -18,6 +18,7 @@ class CSVIO(STrackIO):
     """
     def __init__(self, file_path):
         super().__init__(file_path)
+        self.__track_id_header = 'track_id'
 
     def is_compatible(self):
         if self.file_path.endswith('.csv'):
@@ -29,9 +30,13 @@ class CSVIO(STrackIO):
         headers = list(df.columns.values)
         in_tracks = df.to_numpy()
 
-        tracks = np.zeros((in_tracks.shape[0], 5))
+        track_id_header = self.__track_id_header
         if 'TrackID' in headers:
-            index = headers.index('TrackID')
+            track_id_header = 'TrackID'
+
+        tracks = np.zeros((in_tracks.shape[0], 5))
+        if track_id_header in headers:
+            index = headers.index(track_id_header)
             tracks[:, 0] = in_tracks[:, index]
         if 't' in headers:
             index = headers.index('t')
@@ -50,7 +55,7 @@ class CSVIO(STrackIO):
         if 'z' in headers:
             scale = [1, 1, 1, 1]
 
-        default_headers = ['TrackID', 't', 'z', 'y', 'x']
+        default_headers = [track_id_header, 't', 'z', 'y', 'x']
         properties = {}
         for head in headers:
             if head not in default_headers:
@@ -64,9 +69,9 @@ class CSVIO(STrackIO):
     def write(self, tracks):
         self.stracks = tracks
         # write tracks
-        columns = ['TrackID', 't', 'y', 'x']
+        columns = [self.__track_id_header, 't', 'y', 'x']
         if tracks.data.shape[1] == 5:
-            columns = ['TrackID', 't', 'z', 'y', 'x']
+            columns = [self.__track_id_header, 't', 'z', 'y', 'x']
         df = pd.DataFrame(data=tracks.data, index=None, columns=columns)
         # write properties
         for key, value in tracks.properties.items():
